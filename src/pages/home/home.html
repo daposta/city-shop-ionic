@@ -1,34 +1,37 @@
 <ion-header>
-  <ion-navbar color="danger">
+  <ion-navbar>
     <button ion-button menuToggle icon-only item-left>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
-    <!-- <div class="titleicon">
-      <img src="https://shop.blesscity.com/wp-content/uploads/2017/08/logo-1.png" width="100px" />
-    </div> -->
+    <!-- <ion-title>CityShop</ion-title> -->
+    <div class="titleicon">
+      <!-- <img src="https://shop.blesscity.com/wp-content/uploads/2017/08/logo-1.png" width="100px" /> -->
+      <p class="cityShop">
+        <span class="city">city</span>shop
+      </p>
+    </div>
 
     <!-- <ion-buttons end>
       <ion-searchbar [showCancelButton]=true [(ngModel)]="searchQuery" (search)="onSearch($event)"></ion-searchbar>
 
     </ion-buttons> -->
 
-    <!-- <ion-buttons end>
-      <button ion-button icon-only color="royal" (click)="openCart()">
+    <ion-buttons end>
+      <button ion-button icon-only style="color: #014693" (click)="openCart()">
         <ion-icon name="cart" right></ion-icon>
       </button>
-    </ion-buttons> -->
+    </ion-buttons>
 
   </ion-navbar>
 
   <ion-toolbar>
-    <ion-searchbar [showCancelButton]=true [(ngModel)]="searchQuery" (search)="onSearch($event)" background="#FFF"></ion-searchbar>
+    <ion-searchbar [showCancelButton]=true [(ngModel)]="searchQuery" (search)="onSearch($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content no-padding>
 
-  <ion-card>
+  <ion-card no-padding>
 
     <ion-slides autoplay="5000" loop="true" speed="500" pager (ionSlideDidChange)="slideChanged()" #bannerSlides>
       <!-- <ion-slide>
@@ -46,25 +49,47 @@
     </ion-slides>
   </ion-card>
 
-  <ion-segment class="card-background-page" [(ngModel)]="categories" padding>
-    <ion-segment-button value="new">
+  <ion-card style="box-shadow: none;">
+    <ion-grid>
+      <ion-row class="featured">
+        <ion-col>Featured</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <ion-list>
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-slides #productSlides>
+          <ion-slide *ngFor="let product of products" (click)="openProductPage(product)">
+            <ion-card no-padding>
+              <img [src]="product['images'][0]['src']" alt="">
+            </ion-card>
+          </ion-slide>
+        </ion-slides>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+
+  <!-- <ion-segment class="card-background-page" [(ngModel)]="categories" padding style="color: #014693">
+    <ion-segment-button value="new" style="color: #014693">
       New
     </ion-segment-button>
-    <ion-segment-button value="baby">
+    <ion-segment-button value="baby" style="color: #014693">
       Baby
     </ion-segment-button>
-    <ion-segment-button value="men">
+    <ion-segment-button value="men" style="color: #014693">
       Men
     </ion-segment-button>
-    <ion-segment-button value="women">
+    <ion-segment-button value="women" style="color: #014693">
       Women
     </ion-segment-button>
-    <ion-segment-button value="wedding">
+    <ion-segment-button value="wedding" style="color: #014693">
       Wedding
     </ion-segment-button>
-  </ion-segment>
+  </ion-segment> -->
 
-  <div>
+  <!-- <div>
     <div [ngSwitch]="categories">
       <ion-list *ngSwitchCase="'new'">
         <ion-grid padding>
@@ -79,49 +104,8 @@
           </ion-row>
         </ion-grid>
       </ion-list>
-
-      <!-- <ion-list *ngSwitchCase="'baby'">
-        <ion-item>
-          <h1>Baby Categories</h1>
-        </ion-item>
-      </ion-list>
-
-      <ion-list *ngSwitchCase="'men'">
-        <ion-item>
-          <h1>Men Categories</h1>
-        </ion-item>
-      </ion-list>
-
-      <ion-list *ngSwitchCase="'women'">
-        <ion-item>
-          <h1>Women Categories</h1>
-        </ion-item>
-      </ion-list>
-
-      <ion-list *ngSwitchCase="'wedding'">
-        <ion-item>
-          <h1>Wedding Categories</h1>
-        </ion-item>
-      </ion-list> -->
     </div>
-  </div>
-
-  <!-- <ion-list>
-    <ion-item *ngFor="let product of moreProducts" text-wrap>
-      <ion-thumbnail item-left>
-        <img [src]="product['images'][0]['src']" alt="">
-      </ion-thumbnail>
-
-      <h2>{{product.name}}</h2>
-      <p>
-        <span [innerHTML]="product.price_html"></span>
-      </p>
-
-      <button ion-button icon clear item-right>
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
-    </ion-item>
-  </ion-list> -->
+  </div> -->
 
 </ion-content>
 

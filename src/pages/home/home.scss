@@ -15,5 +15,34 @@ page-home {
     //     text-align: initial;
     // }
 
+    .titleicon {
+        max-width: 90px;
+        max-height: 15px;
+        margin-top: -20px;
+    }
+
+    .cityShop {
+        // border: 2px solid;
+        max-width: 100px;
+        text-align: center;
+        padding: 5px;
+        font-size: 18px;
+        border-top: 2px solid #14163E;
+        border-bottom: 2px solid #F16522;
+        border-left: 2px solid #959394;
+        border-right: 2px solid #959394;
+
+        .city {
+            color: #F16522;
+            font-weight: bold;
+        }
+    }
+
+    .featured {
+        font-size: 22px;
+        font-family: 'Raleway', sans-serif;
+        text-align: center;
+    }
+
 }
 
