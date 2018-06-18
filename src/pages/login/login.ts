@@ -11,6 +11,7 @@ export class LoginPage {
 
   username: string;
   password: string;
+  loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController, public storage: Storage) {
 
@@ -23,6 +24,8 @@ export class LoginPage {
   }
 
   login() {
+    
+    this.loading = true;
 
     this.http.post("https://shop.blesscity.com/wp-json/jwt-auth/v1/token", { username: this.username, password: this.password }).subscribe((res) => {
       console.log('here');
@@ -45,6 +48,7 @@ export class LoginPage {
           }]
         }).present();
       })
+      this.loading = false;
     }, err => {
 
       console.log(err.json());
@@ -53,6 +57,7 @@ export class LoginPage {
         duration: 5000
       }).present();
     })
+    this.loading = false;
   }
 
 }

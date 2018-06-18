@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { ProductDetailsPage } from '../product-details/product-details';
 
 import * as WC from 'woocommerce-api';
 
@@ -29,7 +30,7 @@ export class SearchPage {
       queryStringAuth: true,
     });
 
-    this.WooCommerce.getAsync('products?filter[q]=' + this.searchQuery).then( (searchData) => {
+    this.WooCommerce.getAsync('products?filter[q]=' + this.searchQuery).then((searchData) => {
 
       this.products = JSON.parse(searchData.body);
     })
@@ -40,7 +41,7 @@ export class SearchPage {
   }
 
   loadMoreProducts(event) {
-    this.WooCommerce.getAsync('products?filter[q]=' + this.searchQuery + '&page=' + this.page).then( (searchData) => {
+    this.WooCommerce.getAsync('products?filter[q]=' + this.searchQuery + '&page=' + this.page).then((searchData) => {
 
       this.products = this.products.concat(JSON.parse(searchData.body));
 
@@ -54,10 +55,15 @@ export class SearchPage {
       }
 
       event.complete();
-      this.page ++
+      this.page++
     })
 
 
+  }
+
+  openProductPage(product) {
+
+    this.navCtrl.push(ProductDetailsPage, { "product": product });
   }
 
 }

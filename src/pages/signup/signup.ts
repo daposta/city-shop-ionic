@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 
 import * as WC from 'woocommerce-api'
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-signup',
@@ -125,7 +126,7 @@ export class SignupPage {
     this.WooCommerce.postAsync('customers', customerData.customer).then( (data) => {
       let res = (JSON.parse(data.body));
 
-      if (res.customer) {
+      if (res.role === 'customer') {
         this.alertCtrl.create({
           title: 'Account Created',
           message: 'Your account has been created successfully! Please login to proceed.',
@@ -133,6 +134,7 @@ export class SignupPage {
             text: 'Login',
             handler: () => {
               //TODO
+              this.navCtrl.setRoot(LoginPage);
             }
           }]
         }).present();

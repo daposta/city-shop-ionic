@@ -3,6 +3,8 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 
+import { Stripe } from '@ionic-native/stripe';
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ProductDetailsPage } from '../pages/product-details/product-details';
@@ -18,6 +20,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import { CheckoutPage } from '../pages/checkout/checkout';
 import { SearchPage } from '../pages/search/search';
+import { CardPaymentPage } from '../pages/card-payment/card-payment';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,11 +33,13 @@ import { SearchPage } from '../pages/search/search';
     ProductDetailsPage,
     CartPage,
     CheckoutPage,
-    SearchPage
+    SearchPage,
+    CardPaymentPage,
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
   ],
@@ -47,11 +53,13 @@ import { SearchPage } from '../pages/search/search';
     ProductDetailsPage,
     CartPage,
     CheckoutPage,
-    SearchPage
+    SearchPage,
+    CardPaymentPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Stripe,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

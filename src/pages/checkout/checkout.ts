@@ -3,7 +3,8 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import * as WC from 'woocommerce-api';
 import { Storage } from '@ionic/storage';
-import { HomePage } from '../home/home';
+// import { HomePage } from '../home/home';
+import { CardPaymentPage } from '../card-payment/card-payment';
 
 @Component({
   selector: 'page-checkout',
@@ -27,7 +28,7 @@ export class CheckoutPage {
 
     this.paymentMethods = [
       { method_id: 'paypal', method_title: 'PayPal' },
-      { method_id: 'card', method_title: 'Card Payment' }
+      { method_id: 'stripe', method_title: 'Debit Card (Stripe integration)' }
     ];
 
     this.WooCommerce = WC({
@@ -100,7 +101,8 @@ export class CheckoutPage {
       line_items: orderItems
     };
 
-    console.log(paymentData);
+    // console.log(paymentData);
+    // console.log(data);
     if (paymentData.method_id == 'paypal') {
 
       console.log('Paypal not supported yet');
@@ -110,32 +112,36 @@ export class CheckoutPage {
       this.storage.get('cart').then( (cart) => {
 
         cart.forEach( (element, index) => {
-          console.log(cart);
           orderItems.push({
             product_id: element['product'].id,
-            quantity: element.qty
+            quantity: element.qty,
+            amount: element['product'].amount
           });
         });
+        console.log(cart);
 
         data.line_items = orderItems;
 
         let orderData: any = {};
 
-        orderData.order = data;
-        console.log(orderData.order);
+        orderData = data;
+        console.log(orderData);
+        this.storage.set('orderData', orderData);
 
         this.WooCommerce.postAsync('orders', orderData).then( (order) => {
 
           console.log(JSON.parse(order.body));
 
           let response = (JSON.parse(order.body));
+          this.storage.set('order', response);
           this.alertCtrl.create({
             title: "Order Placed Successfully",
             message: "Your order has been placed successfully. Your order number is " + response.id,
             buttons: [{
-              text: 'OK',
+              text: 'Proceed To Payment',
               handler: () => {
-                this.navCtrl.setRoot(HomePage);
+                // this.navCtrl.setRoot(HomePage);
+                this.navCtrl.setRoot(CardPaymentPage)
               }
             }]
           }).present();

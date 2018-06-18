@@ -46,7 +46,7 @@ export class Menu {
 
     this.WooCommerce.getAsync('products/categories?per_page=100').then((data) => {
 
-      console.log(JSON.parse(data.body));
+      // console.log(JSON.parse(data.body));
       let temp: any[] = JSON.parse(data.body);
 
       for (let i = 0; i < temp.length; i++) {
@@ -56,7 +56,7 @@ export class Menu {
           this.categories.push(temp[i]);
         };
       }
-      console.log(this.categories);
+      // console.log(this.categories);
     }, err => {
 
       console.log(err);
@@ -70,20 +70,20 @@ export class Menu {
   }
 
   ionViewDidEnter() {
-    console.log('here');
 
     this.storage.ready().then(() => {
       this.storage.get("user").then((user) => {
         if (user != null) {
+          // console.log(user);
 
           console.log("user logged in");
-          this.user = JSON.parse(user._body);
-          console.log(this.user);
+          this.user = user;
+          // console.log(this.user);
           this.loggedIn = true;
           this.WooCommerce.getAsync('customers?email=' + this.user.user_email).then((res) => {
 
             this.userData = (JSON.parse(res.body));
-            console.log(this.userData[0]);
+            // console.log(this.userData[0]);
 
             let loggedUser = this.userData[0];
             this.storage.set('loggedUser', loggedUser);
@@ -91,7 +91,7 @@ export class Menu {
             //   console.log(loggedUser);
             // })
           }, err => {
-            
+
             console.log(err);
           })
         } else {
@@ -126,24 +126,12 @@ export class Menu {
     }
 
     if (pageName == 'logout') {
-      // this.storage.remove("user").then( () => {
-      //   this.user = {};
-      //   this.loggedIn = false;
-      // })
-      this.storage.clear();
       this.storage.remove('user');
       this.storage.remove('cart');
+      this.storage.clear();
       this.user = {};
       this.loggedIn = false;
     }
   }
-
-  // getUser() {
-  //   this.WooCommerce.getAsync('customers?email=' + this.user_email).then((res) => {
-  //     console.log(JSON.parse(res.body));
-  //   }, err => {
-  //     console.log(err);
-  //   })
-  // }
 
 }

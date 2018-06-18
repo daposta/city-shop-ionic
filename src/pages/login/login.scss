@@ -1,3 +1,20 @@
 page-login {
+    .spinner svg {
+        width: 30px !important;
+        height: 30px !important;
+        margin: 0 10px;
+    }
+    
+    ion-spinner {
+        * {
+          stroke: #FFF;
+        }
+    
+        &.spinner-circles circle,
+        &.spinner-bubbles circle,
+        &.spinner-dots circle {
+          fill: #FFF;
+        }
+      }
 
 }
