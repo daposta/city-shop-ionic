@@ -6,8 +6,12 @@ import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup'
 import { LoginPage } from '../login/login';
 import { CartPage } from '../cart/cart';
+import { ProductsByCategoryPage } from '../products-by-category/products-by-category'
+import { CategoriesPage } from '../categories/categories';
 
 import * as WC from 'woocommerce-api';
+import { AccountPage } from '../account/account';
+import { ConfirmationPage } from '../confirmation/confirmation';
 
 @Component({
   selector: 'page-menu',
@@ -17,7 +21,7 @@ export class Menu {
 
   homePage: any;
   WooCommerce: any;
-  categories: any[];
+  categories: any[] = [];
   menFashion: any[];
   electronics: any[];
   loggedIn: boolean;
@@ -28,6 +32,7 @@ export class Menu {
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public modalCtrl: ModalController) {
 
     this.homePage = HomePage;
+    // this.homePage = ConfirmationPage;
     this.user = {};
     this.userData = {};
     this.categories = [];
@@ -36,18 +41,20 @@ export class Menu {
 
     this.WooCommerce = WC({
 
-      url: "https://shop.blesscity.com",
-      consumerKey: "ck_16339179bd318b6fd62fba572bdf8811042789b2",
-      consumerSecret: "cs_87c43a67a155b2299251eef9015797cd57994c68",
+      url: "https://blesscity.com",
+      consumerKey: "ck_2acbdb539cac3a9a8cc6c2197d6c4cc7374f054f",
+      consumerSecret: "cs_f0157128a4195e62e7295553402b56691d474ef7",
       version: 'wc/v2',
       wpAPI: true,
       queryStringAuth: true,
     });
 
     this.WooCommerce.getAsync('products/categories?per_page=100').then((data) => {
+      // this.WooCommerce.getAsync('products/categories').then((data) => {
 
-      // console.log(JSON.parse(data.body));
+      console.log(JSON.parse(data.body));
       let temp: any[] = JSON.parse(data.body);
+      // this.categories = data.body;
 
       for (let i = 0; i < temp.length; i++) {
 
@@ -56,7 +63,7 @@ export class Menu {
           this.categories.push(temp[i]);
         };
       }
-      // console.log(this.categories);
+      console.log(this.categories);
     }, err => {
 
       console.log(err);
@@ -104,6 +111,42 @@ export class Menu {
       })
     })
   }
+
+  openCategoryPage(category) {
+
+    // this.navCtrl.setRoot(ProductsByCategoryPage, {'category': category})
+    this.navCtrl.push(ProductsByCategoryPage, {'category': category})
+  }
+
+  openHome() {
+
+    this.navCtrl.push(HomePage);
+  };
+
+  openShop() {
+
+    this.navCtrl.push(CategoriesPage);
+  };
+
+  openAccount() {
+
+    this.storage.get("user").then( (data) => {
+
+      if (data != null) {
+
+        this.navCtrl.push(AccountPage);
+      } else {
+
+        this.navCtrl.push(LoginPage, {next: AccountPage})
+      }
+    })
+  };
+
+  openHelp() {
+
+    // 
+  }
+  
 
   openPage(pageName: string) {
 

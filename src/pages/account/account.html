@@ -1,0 +1,64 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Account</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+
+  <ion-segment [(ngModel)]="myAccount">
+    <ion-segment-button value="account">
+      My Account
+    </ion-segment-button>
+    <ion-segment-button value="orders">
+      My Orders
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="myAccount">
+    <ion-list *ngSwitchCase="'account'">
+
+      <ion-item-divider color="light">ACCOUNT DETAILS</ion-item-divider>
+      <ion-list>
+        <ion-item>
+          <button ion-button icon clear item-left>
+            <ion-icon name="mail-open"></ion-icon>
+          </button>
+          <h6>My Messages</h6>
+          <button ion-button icon clear item-right>
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-item>
+
+        <ion-item>
+          <button ion-button icon clear item-left>
+            <ion-icon name="contact"></ion-icon>
+          </button>
+          <h6>My Account Details</h6>
+          <button ion-button icon clear item-right>
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-item>
+
+        <ion-item>
+          <button ion-button icon clear item-left>
+            <ion-icon name="refresh"></ion-icon>
+          </button>
+          <h6>Transaction History</h6>
+          <button ion-button icon clear item-right>
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-list>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'orders'">
+      myOrdersPage
+    </ion-list>
+  </div>
+
+
+</ion-content>

@@ -1,27 +1,34 @@
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { Stripe } from '@ionic-native/stripe';
+import { SplashScreen } from '@ionic-native/splash-screen';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 
-import { Stripe } from '@ionic-native/stripe';
+
+import { TruncateModule } from '@yellowspot/ng-truncate';
+import { TextMaskModule } from 'angular2-text-mask';
 
 import { MyApp } from './app.component';
+
+import { Menu } from '../pages/menu/menu';
+import { LoginPage } from '../pages/login/login';
+import { SignupPage } from '../pages/signup/signup';
 import { HomePage } from '../pages/home/home';
 import { ProductDetailsPage } from '../pages/product-details/product-details';
 import { CartPage } from '../pages/cart/cart';
-
-import { Menu } from '../pages/menu/menu';
-import { SignupPage } from '../pages/signup/signup';
-import { LoginPage } from '../pages/login/login';
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { IonicStorageModule } from '@ionic/storage';
 import { CheckoutPage } from '../pages/checkout/checkout';
 import { SearchPage } from '../pages/search/search';
 import { CardPaymentPage } from '../pages/card-payment/card-payment';
 import { HttpClientModule } from '@angular/common/http';
+import { ProductsByCategoryPage } from '../pages/products-by-category/products-by-category';
+import { CategoriesPage } from '../pages/categories/categories';
+import { RegisterPage } from '../pages/register/register';
+import { AccountPage } from '../pages/account/account';
+import { ConfirmationPage } from '../pages/confirmation/confirmation';
 
 @NgModule({
   declarations: [
@@ -35,6 +42,11 @@ import { HttpClientModule } from '@angular/common/http';
     CheckoutPage,
     SearchPage,
     CardPaymentPage,
+    ProductsByCategoryPage,
+    CategoriesPage,
+    RegisterPage,
+    AccountPage,
+    ConfirmationPage
   ],
   imports: [
     BrowserModule,
@@ -42,6 +54,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    TruncateModule,
+    TextMaskModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -55,6 +69,11 @@ import { HttpClientModule } from '@angular/common/http';
     CheckoutPage,
     SearchPage,
     CardPaymentPage,
+    ProductsByCategoryPage,
+    CategoriesPage,
+    RegisterPage,
+    AccountPage,
+    ConfirmationPage
   ],
   providers: [
     StatusBar,

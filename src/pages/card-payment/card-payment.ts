@@ -1,21 +1,33 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Stripe } from '@ionic-native/stripe';
 import * as WC from 'woocommerce-api';
 import { HomePage } from '../home/home';
 
+/**
+ * Generated class for the CardPaymentPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
 @Component({
   selector: 'page-card-payment',
   templateUrl: 'card-payment.html'
 })
 export class CardPaymentPage {
 
+  masks: any;
   WooCommerce: any;
-  cardNumber: string;
-  cardMonth: number;
-  cardYear: number;
-  cardCVV: string;
+
+  cardNumber: any;
+  cardExpiry: any;
+  cardMonth: any;
+  cardYear: any;
+  cardCVV: any;
+
   orderData: any;
   order: any;
   card_token: any;
@@ -24,9 +36,9 @@ export class CardPaymentPage {
 
     this.WooCommerce = WC({
 
-      url: "https://shop.blesscity.com",
-      consumerKey: "ck_16339179bd318b6fd62fba572bdf8811042789b2",
-      consumerSecret: "cs_87c43a67a155b2299251eef9015797cd57994c68",
+      url: "https://blesscity.com",
+      consumerKey: "ck_2acbdb539cac3a9a8cc6c2197d6c4cc7374f054f",
+      consumerSecret: "cs_f0157128a4195e62e7295553402b56691d474ef7",
       version: 'wc/v2',
       wpAPI: true,
       queryStringAuth: true,
@@ -45,6 +57,15 @@ export class CardPaymentPage {
     this.storage.get('token').then((token) => {
       this.card_token = token;
     })
+
+    this.masks = {
+      // phoneNumber: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+      cardNumber: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+      cardExpiry: [/[0-1]/, /\d/, '/', /[1-2]/, /\d/],
+      cardMonth: [/\d/, /\d/],
+      cardYear: [/\d/, /\d/],
+      cardCVV: [/\d/, /\d/, /\d/]
+  };
 
   }
 

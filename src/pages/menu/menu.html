@@ -1,39 +1,76 @@
+<div *ngIf="showSplash" class="splash">
+  <div class="spinner">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+  </div>
+</div>
+
 <ion-menu [content]="content">
-  <ion-header>
-    <ion-toolbar>
+  <!-- <ion-header>
+    <ion-toolbar color="green">
       <ion-title>Menu</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
 
   <ion-content>
+    <ion-card no-padding style="margin: 0; width: 100%; height: 250px;">
+      <img src="../../assets/imgs/city third.png" alt="">
+    </ion-card>
+
     <ion-list>
-      <ion-item *ngFor="let category of categories" text-wrap menuClose>
-        <!-- <ion-icon [name]="category.icon" item-left large></ion-icon> -->
-        <!-- <h2>{{category.name}}</h2> -->
-        <h2 [innerHTML]=category.name></h2>
+      <ion-item menuClose (click)="openHome()">
+        <button ion-button icon clear item-left>
+          <ion-icon class="side-icon" name="md-home"></ion-icon>
+        </button>
+        <h2 class="side-title">Home</h2>
       </ion-item>
 
-      <ion-item-divider color="danger">Account</ion-item-divider>
+      <ion-item menuClose (click)="openShop()">
+        <button ion-button icon clear item-left>
+          <ion-icon class="side-icon" name="ios-briefcase"></ion-icon>
+        </button>
+        <h2 class="side-title">Shop</h2>
+      </ion-item>
 
-      <ion-item (click)="openPage('signup')" menuClose  *ngIf="!loggedIn">
+      <ion-item menuClose (click)="openAccount()">
+        <button ion-button icon clear item-left>
+          <ion-icon class="side-icon" name="md-person"></ion-icon>
+        </button>
+        <h2 class="side-title">Account</h2>
+      </ion-item>
+
+      <ion-item menuClose (click)="openHelp()">
+        <button ion-button icon clear item-left>
+          <ion-icon class="side-icon" name="md-help-circle"></ion-icon>
+        </button>
+        <h2 class="side-title">Help</h2>
+      </ion-item>
+
+      <!-- <ion-item *ngFor="let category of categories" text-wrap menuClose (click)="openCategoryPage(category)">
+        <h2 [innerHTML]=category.name></h2>
+      </ion-item> -->
+
+      <!-- <ion-item-divider color="danger">Account</ion-item-divider> -->
+
+      <!-- <ion-item (click)="openPage('signup')" menuClose *ngIf="!loggedIn">
         <h2>Sign Up</h2>
         <p>For a new account</p>
-      </ion-item>
+      </ion-item> -->
 
-      <ion-item (click)="openPage('login')" menuClose *ngIf="!loggedIn">
+      <!-- <ion-item (click)="openPage('login')" menuClose *ngIf="!loggedIn">
         <h2>Login</h2>
         <p>Using email and password</p>
-      </ion-item>
+      </ion-item> -->
 
-      <ion-item (click)="openPage('cart')" menuClose *ngIf="loggedIn">
+      <!-- <ion-item (click)="openPage('cart')" menuClose *ngIf="loggedIn">
         <h2>Your Cart</h2>
         <p>Check items in your cart</p>
-      </ion-item>
+      </ion-item> -->
 
-      <ion-item (click)="openPage('logout')" menuClose *ngIf="loggedIn">
+      <!-- <ion-item (click)="openPage('logout')" menuClose *ngIf="loggedIn">
         <h2>Logout</h2>
         <p>of your Account</p>
-      </ion-item>
+      </ion-item> -->
     </ion-list>
   </ion-content>
 

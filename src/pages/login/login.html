@@ -1,13 +1,46 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Login</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Sign In / Register</ion-title>
   </ion-navbar>
-
 </ion-header>
 
+<ion-content padding>
+  <ion-row class="reg-container">
+    <ion-col>
+      <h6>New Online Customer</h6>
+      <button ion-button outline color="secondary" (click)="openRegister()">
+        Register
+      </button>
+    </ion-col>
+  </ion-row>
 
-<ion-content>
+  <ion-row class="log-container">
+    <ion-col>
+      <h6>Existing Customer</h6>
+
+      <ion-list>
+        <ion-item>
+          <ion-label floating>Username</ion-label>
+          <ion-input type="text" [(ngModel)]="username"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <button ion-button block color="primary" (click)="login()">
+        Login
+      </button>
+
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+
+<!-- <ion-content>
   <ion-card style="margin: 0px; border: none; width: 100%; height: 30vh;">
     <img src="../../assets/imgs/cityshop.png" alt="" style="width: 70%; margin: auto; padding: 20px; margin-top: 10vh;" />
   </ion-card>
@@ -30,4 +63,4 @@
   </button>
   <button ion-button clear block color="danger">No account? Sign Up Here</button>
 
-</ion-content>
+</ion-content> -->

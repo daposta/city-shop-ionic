@@ -1,0 +1,30 @@
+page-products-by-category {
+    ion-content {
+
+        ion-grid {
+
+            ion-col {
+                padding: 0 !important;
+
+                ion-card {
+                    // height: 180px;
+                    height: auto;
+
+                    h4, p {
+                        font-size: 11px !important;
+                        font-weight: bold !important;
+                    }
+
+                    .green {
+                        color: green;
+                    }
+
+                    ion-icon {
+                        color: #363563;
+                    }
+                }
+            }
+        }
+    }
+
+}

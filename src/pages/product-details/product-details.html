@@ -1,22 +1,109 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>{{product.name}}</ion-title>
+  <ion-navbar color="primary">
+    <ion-title [innerHTML]="product.price_html"></ion-title>
   </ion-navbar>
 
-  
+
 </ion-header>
 
 
 <ion-content no-padding>
 
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        <h4 [innerHTML]="product.name"></h4>
+        <p [innerHTML]="product.price_html"></p>
+      </ion-card-title>
+
+      <ion-card style="box-shadow: none">
+        <ion-slides autoplay="3000">
+          <ion-slide *ngFor="let image of product.images">
+            <img [src]="image.src" alt="">
+          </ion-slide>
+        </ion-slides>
+      </ion-card>
+
+      <form [formGroup]="productForm" novalidate (ngSubmit)="addToCart(product)">
+        <ion-list>
+          <!-- <ion-item>
+            <ion-label>Color</ion-label>
+            <ion-select formControlName="color" id="color">
+              <ion-option [selected]>WHITE</ion-option>
+            </ion-select>
+          </ion-item> -->
+
+          <ion-item>
+            <ion-label>Quantity</ion-label>
+            <ion-select formControlName="qty" id="qty">
+              <ion-option selected value="1">1</ion-option>
+              <ion-option value="2">2</ion-option>
+              <ion-option value="3">3</ion-option>
+              <ion-option value="4">4</ion-option>
+              <ion-option value="5">5</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-chip style="width: 100%; text-align: center; background-color: rgba(54, 53, 99, 0.5)">
+            <ion-label color="primary">Payment options are selectable in checkout</ion-label>
+          </ion-chip>
+
+          <ion-row class="price-container">
+            <ion-col>
+              <h4 class="total-text">Total</h4>
+            </ion-col>
+          </ion-row>
+          <ion-row class="price-container">
+            <ion-col>
+              <h4 [innerHTML]="product.price_html" class="total-cost"></h4>
+            </ion-col>
+          </ion-row>
+
+          <button ion-button icon-left block outline color="primary" (click)="addToCart(product)">
+            <ion-icon name="basket"></ion-icon>
+            Add to cart for &nbsp;<span [innerHTML]="product.price_html"></span>
+          </button>
+
+          <button ion-button icon-left block clear color="secondary">
+            <ion-icon name="md-heart"></ion-icon>
+            Save for later
+          </button>
+        </ion-list>
+      </form>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-card-title>
+        <ion-row>
+          <ion-col>
+            <h4>Description</h4>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="truncating && product.description.length > limit">
+            <p [innerHTML]="product.description | truncate : limit"></p>
+            <button ion-button block color="light" (click)="truncating = false">
+              show more
+            </button>
+          </ion-col>
+          <ion-col *ngIf="!truncating && product.description.length > limit">
+            <p [innerHTML]="product.description"></p>
+            <button ion-button block color="light" (click)="truncating = true">
+              show less
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card-title>
+    </ion-card-content>
+  </ion-card>
+
   <ion-fab right top edge (click)="openCart()">
-    <button ion-fab color="danger">
-      <ion-icon name="cart"></ion-icon>
+    <button ion-fab color="light">
+      <ion-icon name="cart" color="primary"></ion-icon>
     </button>
   </ion-fab>
 
-  <ion-card>
+  <!-- <ion-card>
     <ion-slides autoplay="3000">
       <ion-slide *ngFor="let image of product.images">
         <img [src]="image.src" alt="">
@@ -39,9 +126,9 @@
 
     </ion-card-content>
 
-  </ion-card>
+  </ion-card> -->
 
-  <ion-card>
+  <!-- <ion-card>
     <ion-card-content>
       <ion-card-title>
         Specifications
@@ -58,6 +145,6 @@
         </ion-row>
       </ion-grid>
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 
 </ion-content>

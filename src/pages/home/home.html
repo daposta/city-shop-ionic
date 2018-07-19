@@ -1,45 +1,25 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle icon-only item-left>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <!-- <ion-title>CityShop</ion-title> -->
-    <div class="titleicon">
-      <!-- <img src="https://shop.blesscity.com/wp-content/uploads/2017/08/logo-1.png" width="100px" /> -->
-      <p class="cityShop">
-        <span class="city">city</span>shop
-      </p>
-    </div>
-
-    <!-- <ion-buttons end>
-      <ion-searchbar [showCancelButton]=true [(ngModel)]="searchQuery" (search)="onSearch($event)"></ion-searchbar>
-
-    </ion-buttons> -->
+    <ion-title>Home</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only style="color: #014693" (click)="openCart()">
+      <button ion-button icon-only (click)="openCart()">
         <ion-icon name="cart" right></ion-icon>
       </button>
     </ion-buttons>
 
   </ion-navbar>
-
-  <ion-toolbar>
-    <ion-searchbar [showCancelButton]=true [(ngModel)]="searchQuery" (search)="onSearch($event)"></ion-searchbar>
-  </ion-toolbar>
 </ion-header>
 
 <ion-content no-padding>
 
   <ion-card no-padding>
 
-    <ion-slides autoplay="5000" loop="true" speed="500" pager (ionSlideDidChange)="slideChanged()" #bannerSlides>
-      <!-- <ion-slide>
-        <img src="assets/imgs/BLOs.jpg" />
-      </ion-slide>
-      <ion-slide>
-        <img src="assets/imgs/Irina.jpg" />
-      </ion-slide> -->
+    <!-- <ion-slides autoplay="5000" loop="true" speed="500" pager (ionSlideDidChange)="slideChanged()" #bannerSlides> -->
+      <ion-slides autoplay="5000" loop="true" speed="500" pager>
       <ion-slide>
         <img src="assets/imgs/mens.jpg" />
       </ion-slide>
@@ -50,14 +30,55 @@
   </ion-card>
 
   <ion-card style="box-shadow: none;">
-    <ion-grid>
+    <ion-grid style="border-bottom: 1px solid grey">
       <ion-row class="featured">
-        <ion-col>Featured</ion-col>
+        <ion-col>
+          <h3 class="home-title">THE CITYSHOP EXPERIENCE</h3>
+        </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
 
-  <ion-list>
+  <ion-card (click)="openShop()">
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col>
+          <img src="assets/imgs/mens.jpg" alt="">
+          <div class="text-container">
+            <h2 class="text">Shop Now</h2>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <ion-card>
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col>
+          <img src="assets/imgs/Outfitters.jpg" alt="">
+          <div class="text-container">
+            <h2 class="text">My Account</h2>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <ion-card>
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col>
+          <img src="assets/imgs/mens.jpg" alt="">
+          <div class="text-container">
+            <h2 class="text">Brand New</h2>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <!-- <ion-list>
     <ion-grid no-padding>
       <ion-row>
         <ion-slides #productSlides>
@@ -69,49 +90,6 @@
         </ion-slides>
       </ion-row>
     </ion-grid>
-  </ion-list>
-
-  <!-- <ion-segment class="card-background-page" [(ngModel)]="categories" padding style="color: #014693">
-    <ion-segment-button value="new" style="color: #014693">
-      New
-    </ion-segment-button>
-    <ion-segment-button value="baby" style="color: #014693">
-      Baby
-    </ion-segment-button>
-    <ion-segment-button value="men" style="color: #014693">
-      Men
-    </ion-segment-button>
-    <ion-segment-button value="women" style="color: #014693">
-      Women
-    </ion-segment-button>
-    <ion-segment-button value="wedding" style="color: #014693">
-      Wedding
-    </ion-segment-button>
-  </ion-segment> -->
-
-  <!-- <div>
-    <div [ngSwitch]="categories">
-      <ion-list *ngSwitchCase="'new'">
-        <ion-grid padding>
-          <ion-row>
-            <ion-slides #productSlides>
-              <ion-slide *ngFor="let product of products" (click)="openProductPage(product)">
-                <ion-card no-padding>
-                  <img [src]="product['images'][0]['src']" alt="">
-                </ion-card>
-              </ion-slide>
-            </ion-slides>
-          </ion-row>
-        </ion-grid>
-      </ion-list>
-    </div>
-  </div> -->
+  </ion-list> -->
 
 </ion-content>
-
-
-<!-- <img src="https://placehold.it/350x250" alt=""> -->
-<!-- <img [src]="product['images'][0]['src']" alt=""> -->
-<!-- <h1 padding center>{{product.name}}</h1> -->
-<!-- <p padding center>{{product.price}}</p> -->
-<!-- <p padding center>{{product.stock_quantity}}</p> -->

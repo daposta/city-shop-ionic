@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Pay With Card</ion-title>
   </ion-navbar>
 
@@ -11,28 +11,43 @@
   <ion-list>
 
     <ion-item>
-      <ion-label color="primary" stacked>Card Number</ion-label>
-      <ion-input type="text" placeholder="Enter your 16 digit card number" [(ngModel)]="cardNumber"></ion-input>
+      <ion-label stacked>Card Number</ion-label>
+      <!-- <ion-input type="tel" placeholder="Enter your 16 digit card number" [(ngModel)]="cardNumber"></ion-input> -->
+      <ion-input type="tel" [(ngModel)]="cardNumber" [textMask]="{mask: masks.cardNumber}"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label color="primary" stacked>Expiration Month</ion-label>
-      <ion-input type="number" placeholder="Enter your card expiration month" [(ngModel)]="cardMonth"></ion-input>
+      <ion-label stacked>Expiration Month</ion-label>
+      <!-- <ion-input type="tel" placeholder="Enter your card expiration month" [(ngModel)]="cardMonth"></ion-input> -->
+      <ion-input type="tel" [(ngModel)]="cardMonth" [textMask]="{mask: masks.cardMonth}"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label color="primary" stacked>Expiration Year</ion-label>
-      <ion-input type="number" placeholder="Enter your card expiration year" [(ngModel)]="cardYear"></ion-input>
+      <ion-label stacked>Expiration Year</ion-label>
+      <!-- <ion-input type="tel" placeholder="Enter your card expiration year" [(ngModel)]="cardYear"></ion-input> -->
+      <ion-input type="tel" [(ngModel)]="cardYear" [textMask]="{mask: masks.cardYear}"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label color="primary" stacked>CVV</ion-label>
-      <ion-input type="number" placeholder="Enter your CVV" [(ngModel)]="cardCVV"></ion-input>
+      <ion-label stacked>Expiry Date</ion-label>
+      <!-- <ion-input type="tel" placeholder="Enter your card expiration date" [(ngModel)]="cardExpiry"></ion-input> -->
+      <ion-input type="tel" [(ngModel)]="cardExpiry" [textMask]="{mask: masks.cardExpiry}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>CVV</ion-label>
+      <!-- <ion-input type="tel" placeholder="Enter your CVV" [(ngModel)]="cardCVV"></ion-input> -->
+      <ion-input type="tel" [(ngModel)]="cardCVV" [textMask]="{mask: masks.cardCVV}"></ion-input>
     </ion-item>
 
   </ion-list>
 
+  <ion-row>
+    <ion-col style="padding-left: 16px; padding-right: 10px;">
+      <button ion-button block large (click)="validateCard()">Add Card</button>
+    </ion-col>
+  </ion-row>
 
-  <button ion-button block large (click)="validateCard()">Add Card</button>
+
 
 </ion-content>

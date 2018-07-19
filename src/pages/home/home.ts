@@ -6,6 +6,7 @@ import { CartPage } from '../cart/cart';
 
 import * as WC from 'woocommerce-api';
 import { SearchPage } from '../search/search';
+import { CategoriesPage } from '../categories/categories';
 
 @Component({
   selector: 'page-home',
@@ -29,9 +30,9 @@ export class HomePage {
 
     this.WooCommerce = WC({
 
-      url: "https://shop.blesscity.com",
-      consumerKey: "ck_16339179bd318b6fd62fba572bdf8811042789b2",
-      consumerSecret: "cs_87c43a67a155b2299251eef9015797cd57994c68",
+      url: "https://blesscity.com",
+      consumerKey: "ck_2acbdb539cac3a9a8cc6c2197d6c4cc7374f054f",
+      consumerSecret: "cs_f0157128a4195e62e7295553402b56691d474ef7",
       version: 'wc/v2',
       wpAPI: true,
       queryStringAuth: true,
@@ -42,7 +43,7 @@ export class HomePage {
     this.WooCommerce.getAsync('products').then((data) => {
 
       this.products = JSON.parse(data.body);
-      console.log(this.products);
+      // console.log(this.products);
 
       // this.products.forEach(item => {
       // 
@@ -56,31 +57,32 @@ export class HomePage {
 
   ionViewDidLoad() {
 
-    setInterval(() => {
+    // setInterval(() => {
 
-      if (this.productSlides.getActiveIndex() == this.productSlides.length() - 1) {
+    //   if (this.productSlides.getActiveIndex() == this.productSlides.length() - 1) {
 
-        this.productSlides.slideTo(0)
-      }
-      this.productSlides.slideNext();
-    }, 3000)
+    //     this.productSlides.slideTo(0)
+    //   }
+    //   this.productSlides.slideNext();
+    // }, 3000)
   }
 
-  slideChanged() {
+  // slideChanged() {
 
-    let currentIndex = this.bannerSlides.getActiveIndex();
-    if (currentIndex == 4) {
+  //   let currentIndex = this.bannerSlides.getActiveIndex();
+  //   console.log(currentIndex);
+  //   if (currentIndex == 3) {
 
-      this.bannerSlides.stopAutoplay();
-    }
-  }
+  //     this.bannerSlides.stopAutoplay();
+  //   }
+  // }
 
   loadMoreProduct() {
 
     this.WooCommerce.getAsync('products?page=' + this.page).then((data) => {
 
       this.moreProducts = JSON.parse(data.body);
-      console.log(this.moreProducts);
+      // console.log(this.moreProducts);
     }, (err) => {
 
       console.log(err);
@@ -101,6 +103,11 @@ export class HomePage {
     if (this.searchQuery.length > 0) {
       this.navCtrl.push(SearchPage, {"searchQuery": this.searchQuery})
     }
+  }
+
+  openShop() {
+
+    this.navCtrl.push(CategoriesPage);
   }
 
 

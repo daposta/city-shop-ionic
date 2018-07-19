@@ -44,5 +44,27 @@ page-home {
         text-align: center;
     }
 
+    .home-title {
+        font-size: 16px;
+        letter-spacing: 2px;
+        color: #363563;
+        font-weight: bold;
+    }
+
+    .text-container {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background: #14163E;
+        padding: 5px 7px;
+
+        h2 {
+            color: #FFF;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+
 }
 

@@ -1,25 +1,84 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Your Cart</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Cart</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <ion-card>
+  <ion-card [hidden]="!showEmptyCartMessage">
     <ion-grid>
-      <ion-row>
+      <!-- <ion-row>
         <ion-col>Cart Description</ion-col>
-      </ion-row>
-      <ion-row [hidden]="!showEmptyCartMessage">
+      </ion-row> -->
+      <ion-row>
         <ion-col>There are no products in your cart!</ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
 
-  <ion-list>
+  <ion-row>
+    <ion-col padding>
+      <h6 class="basket-title">
+          <ion-icon name="cart" item-left></ion-icon>
+          <span>Basket ({{cartItems.length}} Item)</span>
+      </h6>
+    </ion-col>
+  </ion-row>
+
+  <ion-card class="basket-card">
+    <ion-row *ngFor="let item of cartItems; let i = index" class="basket-row">
+      <ion-col col-5>
+        <img [src]="item.product['images'][0]['src']" alt="">
+      </ion-col>
+      <ion-col col-7>
+        <ion-list text-wrap>
+          <ion-row>
+            <ion-col>
+              <h6 style="font-weight: bold;">{{item.product.name}}</h6>
+            </ion-col>
+          </ion-row>
+          <!-- <ion-row>
+            <ion-col>
+              <p>Size: <span>{{item.qty}}</span></p>
+            </ion-col>
+          </ion-row> -->
+          <ion-row>
+            <ion-col>
+              <p style="font-weight: bold;">Quantity: <span style="font-weight: normal;">{{item.qty}}</span></p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <p style="font-weight: bold;">Item Total: <span style="font-weight: normal;">{{item.qty}} * <span [innerHTML]="item.product.price_html"></span></span></p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="text-align: right">
+              <button ion-button clear item-right color="primary" (click)="removeFromCart(item, i)">
+                Remove
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card class="basket-total" style="margin-left: 0; width: 100%;">
+    <ion-row padding>
+      <ion-col>
+        <b>Total</b>
+      </ion-col>
+      <ion-col style="text-align: right">
+        <b>&pound; {{total}}</b>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <!-- <ion-list>
     <ion-item *ngFor="let item of cartItems; let i = index">
       <ion-thumbnail item-left>
         <img [src]="item.product['images'][0]['src']" alt="">
@@ -30,9 +89,9 @@
         <ion-icon name="close-circle"></ion-icon>
       </button>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
-  <ion-grid>
+  <!-- <ion-grid>
     <ion-card>
       <ion-grid>
         <ion-row>
@@ -51,7 +110,7 @@
         </ion-row>
       </ion-grid>
     </ion-card>
-  </ion-grid>
+  </ion-grid> -->
 
 </ion-content>
 
@@ -60,10 +119,10 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <button ion-button color="danger" outline block (click)="closeModal()">Back</button>
+          <button ion-button color="light" block (click)="closeModal()">Continue Shopping</button>
         </ion-col>
         <ion-col>
-          <button ion-button color="danger" block (click)="checkout()">Checkout</button>
+          <button ion-button color="primary" block (click)="checkout()">Checkout</button>
         </ion-col>
       </ion-row>
     </ion-grid>

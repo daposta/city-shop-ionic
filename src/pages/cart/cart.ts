@@ -10,11 +10,13 @@ import { LoginPage } from '../login/login';
 })
 export class CartPage {
 
-  cartItems: any[] = [];
+  cartItems: any[];
   total: any;
   showEmptyCartMessage: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public viewCtrl: ViewController) {
+
+    this.cartItems = [];
 
     this.total = 0.0;
 
@@ -40,7 +42,7 @@ export class CartPage {
 
   ionViewDidLoad() {
 
-    // console.log('ionViewDidLoad CartPage');
+    console.log('ionViewDidLoad CartPage');
   }
 
   removeFromCart (item, i) {

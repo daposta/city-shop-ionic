@@ -4,5 +4,11 @@
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "proxies": [
+    {
+      "path":"/products",
+      "proxyUrl": "https://blesscity.com/products"
+    }
+  ]
 }

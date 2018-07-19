@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController, ViewController } from 'ionic-angular';
 
 import * as WC from 'woocommerce-api'
 import { LoginPage } from '../login/login';
@@ -14,7 +14,7 @@ export class SignupPage {
   billing_shipping_same: boolean;
   WooCommerce: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public alertCtrl: AlertController, public viewCtrl: ViewController) {
 
     this.newUser.billing = {};
     this.newUser.shipping = {};
@@ -22,9 +22,9 @@ export class SignupPage {
 
     this.WooCommerce = WC({
 
-      url: "https://shop.blesscity.com",
-      consumerKey: "ck_16339179bd318b6fd62fba572bdf8811042789b2",
-      consumerSecret: "cs_87c43a67a155b2299251eef9015797cd57994c68",
+      url: "https://blesscity.com",
+      consumerKey: "ck_2acbdb539cac3a9a8cc6c2197d6c4cc7374f054f",
+      consumerSecret: "cs_f0157128a4195e62e7295553402b56691d474ef7",
       version: 'wc/v2',
       wpAPI: true,
       queryStringAuth: true,
@@ -151,6 +151,11 @@ export class SignupPage {
         }).present();
       }
     })
+  };
+
+  back() {
+
+    this.viewCtrl.dismiss();
   }
 
 }

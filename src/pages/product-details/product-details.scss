@@ -1,3 +1,26 @@
 page-product-details {
+    ion-title {
+        color: #FFF;
+    }
 
+    form {
+
+        ion-row.price-container {
+            
+            ion-col {
+                text-align: right;
+                padding-right: 15px;
+                margin-top: 10px;
+
+                h4 {
+                    font-weight: bold;
+                    font-size: 16px;
+                }
+
+                h4.total-text {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
 }

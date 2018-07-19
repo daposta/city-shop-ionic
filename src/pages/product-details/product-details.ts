@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { Storage } from '@ionic/storage';
 import { CartPage } from '../cart/cart';
@@ -10,17 +11,27 @@ import { CartPage } from '../cart/cart';
 })
 export class ProductDetailsPage {
 
+  productForm: FormGroup;
   product: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public toastCtrl: ToastController, public modalCtrl: ModalController) {
+  @Input() text: string;
+  @Input() limit: number = 250;
+  truncating: boolean = true;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public toastCtrl: ToastController, public modalCtrl: ModalController, public fb: FormBuilder) {
 
     this.product = this.navParams.get('product');
     console.log(this.product);
+
+    this.productForm = this.fb.group({
+      // color: ['WHITE', Validators.required],
+      qty: ['1', Validators.required]
+    })
   }
 
   ionViewDidLoad() {
 
-    // console.log('ionViewDidLoad ProductDetailsPage');
+    console.log('ionViewDidLoad ProductDetailsPage');
   }
 
   addToCart(product) {
@@ -29,39 +40,40 @@ export class ProductDetailsPage {
 
     this.storage.get('cart').then((data) => {
 
-      if (data == null || data.length == 0) {
+      if (data == null || data == undefined || data.length == 0) {
 
         data = [];
 
         data.push({
           "product": product,
-          "qty": 1,
-          "amount": parseFloat(product.price)
+          "amount": parseFloat(product.price),
+          "qty": parseInt(this.productForm.controls['qty'].value),
         });
 
       } else {
 
         let added = 0;
 
-        for (let i = 0; i < data.length; i++) {
+        // for (let i = 0; i < data.length; i++) {
 
-          if (product.id == data[i].product.id) {
+        //   if (product.id == data[i].product.id) {
 
-            console.log("product is already in cart");
+        //     console.log("product is already in cart");
 
-            let qty = data[i].qty;
-            data[i].qty = qty + 1;
-            data[i].amount = parseFloat(data[i].amount) + parseFloat(data[i].product.price);
-            added = 1;
-          }
-        }
+        //     let qty = data[i].qty;
+        //     data[i].qty = qty + this.productForm.controls['qty'].value;
+        //     data[i].size = 
+        //     data[i].amount = parseFloat(data[i].amount) + parseFloat(data[i].product.price);
+        //     added = 1;
+        //   }
+        // }
 
         if (added == 0) {
 
           data.push({
             "product": product,
-            "qty": 1,
-            "amount": parseFloat(product.price)
+            "amount": parseFloat(product.price),
+            "qty": parseInt(this.productForm.controls['qty'].value)
           });
         }
       }
