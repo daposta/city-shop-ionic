@@ -11,7 +11,8 @@ import { CategoriesPage } from '../categories/categories';
 
 import * as WC from 'woocommerce-api';
 import { AccountPage } from '../account/account';
-import { ConfirmationPage } from '../confirmation/confirmation';
+import { TermsPage } from '../terms/terms';
+import { ShippingPage } from '../shipping/shipping';
 
 @Component({
   selector: 'page-menu',
@@ -32,7 +33,7 @@ export class Menu {
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public modalCtrl: ModalController) {
 
     this.homePage = HomePage;
-    // this.homePage = ConfirmationPage;
+    // this.homePage = LoginPage;
     this.user = {};
     this.userData = {};
     this.categories = [];
@@ -48,26 +49,6 @@ export class Menu {
       wpAPI: true,
       queryStringAuth: true,
     });
-
-    this.WooCommerce.getAsync('products/categories?per_page=100').then((data) => {
-      // this.WooCommerce.getAsync('products/categories').then((data) => {
-
-      console.log(JSON.parse(data.body));
-      let temp: any[] = JSON.parse(data.body);
-      // this.categories = data.body;
-
-      for (let i = 0; i < temp.length; i++) {
-
-        if (temp[i].parent == 0) {
-
-          this.categories.push(temp[i]);
-        };
-      }
-      console.log(this.categories);
-    }, err => {
-
-      console.log(err);
-    })
   }
 
   ionViewDidLoad() {
@@ -83,7 +64,7 @@ export class Menu {
         if (user != null) {
           // console.log(user);
 
-          console.log("user logged in");
+          // console.log("user logged in");
           this.user = user;
           // console.log(this.user);
           this.loggedIn = true;
@@ -91,12 +72,10 @@ export class Menu {
 
             this.userData = (JSON.parse(res.body));
             // console.log(this.userData[0]);
+            // console.log(this.userData);
 
             let loggedUser = this.userData[0];
             this.storage.set('loggedUser', loggedUser);
-            // this.storage.get('loggedUser').then((loggedUser) => {
-            //   console.log(loggedUser);
-            // })
           }, err => {
 
             console.log(err);
@@ -114,7 +93,6 @@ export class Menu {
 
   openCategoryPage(category) {
 
-    // this.navCtrl.setRoot(ProductsByCategoryPage, {'category': category})
     this.navCtrl.push(ProductsByCategoryPage, {'category': category})
   }
 
@@ -132,9 +110,21 @@ export class Menu {
 
     this.storage.get("user").then( (data) => {
 
-      if (data != null) {
+      if (data) {
 
         this.navCtrl.push(AccountPage);
+      } else if (!data) {
+
+        this.storage.get("loggedUser").then((data) => {
+
+          if (data) {
+
+            this.navCtrl.push(AccountPage);
+          } else {
+
+            this.navCtrl.push(LoginPage, {next: AccountPage});
+          }
+        })
       } else {
 
         this.navCtrl.push(LoginPage, {next: AccountPage})
@@ -142,9 +132,14 @@ export class Menu {
     })
   };
 
-  openHelp() {
+  openTerms() {
 
-    // 
+    this.navCtrl.push(TermsPage);
+  }
+
+  openShipping() {
+
+    this.navCtrl.push(ShippingPage)
   }
   
 
@@ -153,12 +148,6 @@ export class Menu {
     if (pageName == "signup") {
       this.navCtrl.push(SignupPage);
     }
-    this.user_email = this.user._body
-    // this.WooCommerce.getAsync('customers?email=' + this.user_email).then((res) => {
-    //   console.log(JSON.parse(res.body));
-    // }, err => {
-    //   console.log(err);
-    // })
     if (pageName == 'login') {
       this.navCtrl.push(LoginPage);
     }

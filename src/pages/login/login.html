@@ -1,66 +1,82 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Sign In / Register</ion-title>
+    <ion-title>Sign In</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-row class="reg-container">
-    <ion-col>
-      <h6>New Online Customer</h6>
-      <button ion-button outline color="secondary" (click)="openRegister()">
-        Register
-      </button>
-    </ion-col>
-  </ion-row>
+<ion-content>
+  <div class="logo-container">
+    <img src="assets/imgs/shop-icon.png" alt="">
 
-  <ion-row class="log-container">
-    <ion-col>
-      <h6>Existing Customer</h6>
+    <h4>Login in with social network</h4>
+
+    <ion-grid class="button-group">
+      <ion-row>
+        <ion-col>
+          <button ion-button block color="facebook" (click)="fbLogin()">Facebook</button>
+        </ion-col>
+        <ion-col>
+          <button ion-button block color="google" (click)="googleLogin()">Google+</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <hr style="background-color: #363563; opacity: .7;">
+        </ion-col>
+        <ion-col width-10 style="color: #363563; font-weight: bold; opacity: .8;">
+          OR
+        </ion-col>
+        <ion-col>
+          <hr style="background-color: #363563; opacity: .7;">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="login-container">
+    <form novalidate [formGroup]="loginForm">
+
+      <!--  -->
+      <input type="text" name="username" style="display: none !important">
+      <input type="password" name="password" style="display: none !important">
+      <!--  -->
+
+      <div *ngIf="errMsg" class="api-error" no-wrap>
+        <p [innerHTML]="errMsg"></p>
+      </div>
 
       <ion-list>
+
         <ion-item>
           <ion-label floating>Username</ion-label>
-          <ion-input type="text" [(ngModel)]="username"></ion-input>
+          <ion-input type="text" [(ngModel)]="username" formControlName="username" required></ion-input>
         </ion-item>
+        <div *ngIf="submitted && loginForm.controls.username.hasError('required')"
+          class="error-container">
+          <p class="error-text">username is required</p>
+        </div>
 
         <ion-item>
           <ion-label floating>Password</ion-label>
-          <ion-input type="password" [(ngModel)]="password"></ion-input>
+          <ion-input type="password" [(ngModel)]="password" formControlName="password"></ion-input>
         </ion-item>
+        <div *ngIf="submitted && loginForm.controls.password.errors" class="error-container">
+          <p *ngIf="loginForm.controls.password.errors.required" class="error-text">password is required</p>
+          <p *ngIf="loginForm.controls.password.errors.minlength" class="error-text">password must be greater than 6 characters</p>
+        </div>
+
+
       </ion-list>
+    </form>
+  </div>
 
-      <button ion-button block color="primary" (click)="login()">
-        Login
-      </button>
+  <div class="btn-container">
+    <button ion-button block color="primary" class="btn-login" (click)="login()" [disabled]="loading">Login</button>
+    <button ion-button block clear color="primary" (click)="openRegister()">Click to Register</button>
+  </div>
 
-    </ion-col>
-  </ion-row>
 </ion-content>
-
-
-<!-- <ion-content>
-  <ion-card style="margin: 0px; border: none; width: 100%; height: 30vh;">
-    <img src="../../assets/imgs/cityshop.png" alt="" style="width: 70%; margin: auto; padding: 20px; margin-top: 10vh;" />
-  </ion-card>
-
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Username</ion-label>
-      <ion-input type="text" [(ngModel)]="username"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input type="password" [(ngModel)]="password"></ion-input>
-    </ion-item>
-  </ion-list>
-
-  <button ion-button block color="danger" (click)="login()" [disabled]="loading">
-    Login
-    <ion-spinner class="spinner-energized" name="bubbles" *ngIf="loading"></ion-spinner>
-  </button>
-  <button ion-button clear block color="danger">No account? Sign Up Here</button>
-
-</ion-content> -->

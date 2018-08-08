@@ -1,6 +1,27 @@
 page-product-details {
     ion-title {
         color: #FFF;
+
+        del {
+            display: none;
+        }
+        
+        ins {
+            text-decoration: none;
+            font-weight: normal;
+            font-size: 18px;
+        }
+    }
+
+    p.tit {
+        del {
+            font-size: 11px;
+        }
+
+        ins {
+            text-decoration: none;
+            font-weight: normal;
+        }
     }
 
     form {
@@ -17,9 +38,29 @@ page-product-details {
                     font-size: 16px;
                 }
 
-                h4.total-text {
-                    font-size: 18px;
+                h4.total-cost {
+                    
+                    del {
+                        font-weight: normal;
+                        font-size: 12px;
+                    }
+                    
+                    ins {
+                        text-decoration: none;
+                        font-weight: normal;
+                        font-size: 18px;
+                    }
                 }
+            }
+        }
+
+        button.buy-button {
+            del {
+                display: none;
+            }
+
+            ins {
+                text-decoration: none;
             }
         }
     }

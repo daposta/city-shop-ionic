@@ -9,7 +9,17 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row>
+    <ion-row align-items-end *ngIf="showToggle">
+      <ion-col col-6 offset-6 class="toggle-container">
+        <button ion-button outline icon-only [ngClass]="{'active': _showList}" (click)="showList()">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <button ion-button outline icon-only [ngClass]="{'active': _showGrid}" (click)="showGrid()">
+          <ion-icon name="apps"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="_showGrid">
       <ion-col col-6 *ngFor="let product of products" text-wrap (click)="openProductPage(product)">
         <ion-card>
           <img [src]="product['images']['0'].src" alt="">
@@ -33,14 +43,19 @@
 
       </ion-col>
     </ion-row>
+    <ion-list *ngIf="_showList">
+      <ion-item *ngFor="let product of products" text-wrap (click)="openProductPage(product)" class="item">
+        <ion-thumbnail item-start>
+          <img [src]="product['images']['0'].src" alt="">
+        </ion-thumbnail>
+        <h4 [innerHTML]="product.name"></h4>
+        <p [innerHTML]="product.price_html"></p>
+      </ion-item>
+    </ion-list>
   </ion-grid>
 
-  <!-- <ion-list>
-    <ion-item *ngFor="let product of products" text-wrap>
-      <ion-thumbnail item-left>
-        <img [src]="product['images']['0'].src" alt="">
-      </ion-thumbnail>
-    </ion-item>
-  </ion-list> -->
+  <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

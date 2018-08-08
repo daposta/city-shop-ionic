@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { Facebook } from '@ionic-native/facebook';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 
 import { TruncateModule } from '@yellowspot/ng-truncate';
@@ -29,6 +31,12 @@ import { CategoriesPage } from '../pages/categories/categories';
 import { RegisterPage } from '../pages/register/register';
 import { AccountPage } from '../pages/account/account';
 import { ConfirmationPage } from '../pages/confirmation/confirmation';
+import { BrandNewPage } from '../pages/brand-new/brand-new';
+import { SubCategoriesPage } from '../pages/sub-categories/sub-categories';
+import { ShippingPage } from '../pages/shipping/shipping';
+import { TermsPage } from '../pages/terms/terms';
+import { OrderDetailPage } from '../pages/order-detail/order-detail';
+import { AccountDetailsPage } from '../pages/account-details/account-details';
 
 @NgModule({
   declarations: [
@@ -46,7 +54,13 @@ import { ConfirmationPage } from '../pages/confirmation/confirmation';
     CategoriesPage,
     RegisterPage,
     AccountPage,
-    ConfirmationPage
+    ConfirmationPage,
+    BrandNewPage,
+    SubCategoriesPage,
+    ShippingPage,
+    TermsPage,
+    OrderDetailPage,
+    AccountDetailsPage,
   ],
   imports: [
     BrowserModule,
@@ -73,13 +87,21 @@ import { ConfirmationPage } from '../pages/confirmation/confirmation';
     CategoriesPage,
     RegisterPage,
     AccountPage,
-    ConfirmationPage
+    ConfirmationPage,
+    BrandNewPage,
+    SubCategoriesPage,
+    ShippingPage,
+    TermsPage,
+    OrderDetailPage,
+    AccountDetailsPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Stripe,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    Facebook,
+    NativeStorage
   ]
 })
 export class AppModule { }

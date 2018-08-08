@@ -1,9 +1,6 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <button ion-button menuToggle icon-only item-left>
-      <ion-icon name="menu"></ion-icon>
-    </button>
     <ion-title>Order Confirmation</ion-title>
   </ion-navbar>
 
@@ -13,10 +10,24 @@
 <ion-content>
   <ion-row>
     <ion-col>
-      <ion-card class="truck-container">
-        <img src="../../assets/imgs/delivery.png" alt="">
+      <ion-card class="truck-container" padding>
+        <img src="../../assets/imgs/shipped.png" alt="">
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-card class="text-container">
+        <h1>Thank you for your purchase!</h1>
+        <p>Your order is complete, you will receive an email with your order details shortly.</p>
+        <p class="orderNo">Order# <span class="number"> {{order?.number}}</span></p>
       </ion-card>
     </ion-col>
   </ion-row>
 
 </ion-content>
+
+<ion-footer>
+  <button ion-button full color="primary" class="continue" (click)="continue()">Continue Shopping</button>
+</ion-footer>

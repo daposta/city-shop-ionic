@@ -44,7 +44,7 @@ export class CheckoutPage {
     this.storage.get('loggedUser').then( (loggedUser) => {
 
       this.userInfo = loggedUser;
-      console.log(this.userInfo);
+      // console.log(this.userInfo);
       // this.newOrder = this.userInfo;
       this.newOrder.first_name = this.userInfo.first_name;
       this.newOrder.last_name = this.userInfo.last_name;
@@ -114,23 +114,24 @@ export class CheckoutPage {
         cart.forEach( (element, index) => {
           orderItems.push({
             product_id: element['product'].id,
-            quantity: element.qty,
+            quantity: parseInt(element.qty),
+            size: element.size,
             amount: element['product'].amount
           });
         });
-        console.log(cart);
+        // console.log(cart);
 
         data.line_items = orderItems;
 
         let orderData: any = {};
 
         orderData = data;
-        console.log(orderData);
+        // console.log(orderData);
         this.storage.set('orderData', orderData);
 
         this.WooCommerce.postAsync('orders', orderData).then( (order) => {
 
-          console.log(JSON.parse(order.body));
+          // console.log(JSON.parse(order.body));
 
           let response = (JSON.parse(order.body));
           this.storage.set('order', response);

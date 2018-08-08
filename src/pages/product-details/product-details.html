@@ -14,7 +14,7 @@
     <ion-card-content>
       <ion-card-title>
         <h4 [innerHTML]="product.name"></h4>
-        <p [innerHTML]="product.price_html"></p>
+        <p class="tit" [innerHTML]="product.price_html"></p>
       </ion-card-title>
 
       <ion-card style="box-shadow: none">
@@ -27,21 +27,28 @@
 
       <form [formGroup]="productForm" novalidate (ngSubmit)="addToCart(product)">
         <ion-list>
-          <!-- <ion-item>
+          <ion-item *ngIf="size.length > 1">
+            <ion-label>Size</ion-label>
+            <ion-select formControlName="size" id="size">
+              <ion-option *ngFor="let s of size">{{s}}</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item *ngIf="color.length > 1">
             <ion-label>Color</ion-label>
             <ion-select formControlName="color" id="color">
-              <ion-option [selected]>WHITE</ion-option>
+              <ion-option *ngFor="let c of color">{{c}}</ion-option>
             </ion-select>
-          </ion-item> -->
+          </ion-item>
 
           <ion-item>
             <ion-label>Quantity</ion-label>
             <ion-select formControlName="qty" id="qty">
-              <ion-option selected value="1">1</ion-option>
-              <ion-option value="2">2</ion-option>
-              <ion-option value="3">3</ion-option>
-              <ion-option value="4">4</ion-option>
-              <ion-option value="5">5</ion-option>
+              <ion-option [value]="1" (ionSelect)="getQty($event)">1</ion-option>
+              <ion-option [value]="2" (ionSelect)="getQty($event)">2</ion-option>
+              <ion-option [value]="3" (ionSelect)="getQty($event)">3</ion-option>
+              <ion-option [value]="4" (ionSelect)="getQty($event)">4</ion-option>
+              <ion-option [value]="5" (ionSelect)="getQty($event)">5</ion-option>
             </ion-select>
           </ion-item>
           <ion-chip style="width: 100%; text-align: center; background-color: rgba(54, 53, 99, 0.5)">
@@ -59,9 +66,10 @@
             </ion-col>
           </ion-row>
 
-          <button ion-button icon-left block outline color="primary" (click)="addToCart(product)">
+          <button ion-button icon-left block outline color="primary" (click)="addToCart(product)" class="buy-button">
             <ion-icon name="basket"></ion-icon>
-            Add to cart for &nbsp;<span [innerHTML]="product.price_html"></span>
+            Add to cart for &pound;<span [innerHTML]="productPrice | number : '1.2-2'"></span>
+            <!-- Add to cart for &nbsp;<span [innerHTML]="product.price_html"></span> -->
           </button>
 
           <button ion-button icon-left block clear color="secondary">
@@ -100,6 +108,7 @@
   <ion-fab right top edge (click)="openCart()">
     <button ion-fab color="light">
       <ion-icon name="cart" color="primary"></ion-icon>
+      <!-- <ion-badge>1</ion-badge> -->
     </button>
   </ion-fab>
 

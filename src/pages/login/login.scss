@@ -1,20 +1,109 @@
-// page-login {
-//     .spinner svg {
-//         width: 30px !important;
-//         height: 30px !important;
-//         margin: 0 10px;
-//     }
-    
-//     ion-spinner {
-//         * {
-//           stroke: #FFF;
-//         }
-    
-//         &.spinner-circles circle,
-//         &.spinner-bubbles circle,
-//         &.spinner-dots circle {
-//           fill: #FFF;
-//         }
-//       }
+ion-content {
+  
+  .logo-container {
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    border-radius: 0 0 10px 10px;
+    margin: 0 10px;
+      
+    img {
+      height: 80px;
+    }
 
-// }
+    h4 {
+        font-size: 16px;
+        color: #363563;
+        opacity: .8;
+    }
+
+    .button-group {
+      .col {
+        &:first-child:not(:last-child) {
+          padding-right: 0;
+
+          .button {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+        }
+        
+        &:not(:first-child):not(:last-child) {
+          padding-right: 0;
+          padding-left: 0;
+          
+          .button {
+            border-radius: 0;
+          }
+        }
+
+        &:last-child:not(:first-child) {
+          padding-left: 0;
+          .button {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+          }
+        }
+      }
+    }
+  }
+        
+  .login-container {
+    border: 1px solid #363563;
+    border-radius: 5px;
+    margin: 0 20px;
+
+    form {
+      margin: 10px;
+
+      .api-error {
+        padding: 0 10px;
+        
+        p {
+          color: grey;
+
+          a {
+            // color: red;
+            opacity: .8;
+            text-decoration: none;
+            font-weight: bold;
+          }
+        }
+      }
+
+      ion-list {
+
+        ion-item, .item-inner {
+          border-bottom-color: transparent !important;
+          box-shadow: none !important;
+          
+          input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px white inset;
+          }
+
+          ion-label {
+              color: #363563 !important;
+          }
+
+          input {
+            margin-bottom: 0 !important;
+          }
+        }
+
+        .error-container {
+          padding-left: 15px;
+          
+          .error-text {
+            color: red;
+          }
+        }
+      }
+    }
+  }
+
+  .btn-container {
+    padding: 10px 20px;
+  }
+
+}
+

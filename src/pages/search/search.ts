@@ -17,7 +17,7 @@ export class SearchPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
 
-    console.log(this.navParams.get("searchQuery"));
+    // console.log(this.navParams.get("searchQuery"));
     this.searchQuery = this.navParams.get("searchQuery");
 
     this.WooCommerce = WC({

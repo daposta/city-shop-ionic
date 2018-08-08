@@ -1,3 +1,38 @@
-// page-signup {
+page-signup {
 
-// }
+    .list-md .item-input:last-child {
+        border-bottom: 0;
+    }
+
+    ion-item, .item-inner {
+        // border-bottom-color: transparent !important;
+        // box-shadow: none !important;
+
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px white inset;
+        }
+    }
+
+    .form-error-container {
+    
+        .input-wrapper {
+            // margin: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    
+        .form-error {
+            color: red;
+            font-size: 11px;
+            font-weight: normal;
+        }
+    }
+
+    .error-container {
+        padding-left: 15px;
+        
+        .error-text {
+            color: red;
+        }
+    }
+}

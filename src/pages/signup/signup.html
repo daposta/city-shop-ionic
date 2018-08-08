@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Customer Sign Up</ion-title>
   </ion-navbar>
 
@@ -9,128 +9,240 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-divider color="danger">Personal Details</ion-item-divider>
 
-    <ion-item>
-      <ion-label>First Name</ion-label>
-      <ion-input type="text" [(ngModel)]="newUser.first_name"></ion-input>
-    </ion-item>
+    <form #userForm="ngForm">
+      <!--  -->
+      <input type="text" name="username" style="display: none !important">
+      <input type="password" name="password" style="display: none !important">
+      <!--  -->
 
-    <ion-item>
-      <ion-label>Last Name</ion-label>
-      <ion-input type="text" [(ngModel)]="newUser.last_name"></ion-input>
-    </ion-item>
+      <ion-item-divider color="light">Personal Details</ion-item-divider>
 
-    <ion-item>
-      <ion-label>Email</ion-label>
-      <ion-input type="text" [(ngModel)]="newUser.email" (blur)="checkEmail()"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>First Name</ion-label>
+        <ion-input type="text" #newUser_first_name="ngModel" name="newUser_first_name" [(ngModel)]="newUser.first_name" minlength="3"
+          required></ion-input>
+      </ion-item>
+      <div *ngIf="newUser_first_name.errors && (newUser_first_name.dirty || newUser_first_name.touched)" class="error-container">
+        <p *ngIf="newUser_first_name.errors?.required" class="error-text">first name is required</p>
+      </div>
 
-    <ion-item>
-      <ion-label>Username</ion-label>
-      <ion-input type="text" [(ngModel)]="newUser.username"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Last Name</ion-label>
+        <ion-input type="text" #newUser_last_name="ngModel" name="newUser_last_name" [(ngModel)]="newUser.last_name" minlength="3"
+          required></ion-input>
+      </ion-item>
+      <div *ngIf="newUser_last_name.errors && (newUser_last_name.dirty || newUser_last_name.touched)" class="error-container">
+        <p *ngIf="newUser_last_name.errors?.required" class="error-text">last name is required</p>
+      </div>
 
-    <ion-item>
-      <ion-label>Password</ion-label>
-      <ion-input type="password" [(ngModel)]="newUser.password"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Email</ion-label>
+        <ion-input type="text" #newUser_email="ngModel" name="newUser_email" [(ngModel)]="newUser.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+          required></ion-input>
+      </ion-item>
+      <div *ngIf="newUser_email.invalid && (newUser_email.dirty || newUser_email.touched)" class="error-container">
+        <p *ngIf="newUser_email.errors?.required" class="error-text">email is required</p>
+        <p *ngIf="newUser_email.errors?.pattern && newUser_email.touched" class="error-text">email is invalid</p>
+      </div>
 
-    <ion-item>
-      <ion-label>Confirm Password</ion-label>
-      <ion-input type="password" [(ngModel)]="newUser.confirm_password"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Username</ion-label>
+        <ion-input type="text" #newUser_username="ngModel" name="newUser_username" [(ngModel)]="newUser.username" required></ion-input>
+      </ion-item>
+      <div *ngIf="newUser_username.errors && (newUser_username.dirty || newUser_username.touched)" class="error-container">
+        <p *ngIf="newUser_username.errors?.required" class="error-text">username is required</p>
+      </div>
 
-    <ion-item-divider color="danger">Billing Details</ion-item-divider>
+      <ion-item>
+        <ion-label>Password</ion-label>
+        <ion-input type="password" #newUser_password="ngModel" name="newUser_password" [(ngModel)]="newUser.password" minlength="6"
+          required></ion-input>
+      </ion-item>
+      <div *ngIf="newUser_password.invalid && (newUser_password.dirty || newUser_confirm_password.touched)" class="error-container">
+        <p *ngIf="newUser_password.errors?.required" class="error-text">password is required</p>
+        <p *ngIf="newUser_password.invalid" class="error-text">password must be more than 6 characters</p>
+      </div>
 
-    <ion-item>
-      <ion-label>Address Line 1</ion-label>
-      <ion-textarea type="text" maxlength="80" [(ngModel)]="newUser.billing.address_1"></ion-textarea>
-    </ion-item>
+      <ion-item>
+        <ion-label>Confirm Password</ion-label>
+        <ion-input type="password" #newUser_confirm_password="ngModel" name="newUser_confirm_password" [(ngModel)]="newUser.confirm_password"
+          required></ion-input>
+      </ion-item>
+      <div *ngIf="(newUser_confirm_password.touched || newUser_confirm_password.dirty) && newUser_password.value != newUser_confirm_password.value"
+        class="error-container">
+        <p class="error-text">password don't match</p>
+      </div>
 
-    <ion-item>
-      <ion-label>Address Line 2</ion-label>
-      <ion-textarea type="text" maxlength="80" [(ngModel)]="newUser.billing.address_2"></ion-textarea>
-    </ion-item>
+      <ion-item>
+        <ion-label>Phone Number</ion-label>
+        <ion-input type="text" #newUser_phone="ngModel" name="newUser_phone" [(ngModel)]="newUser.phone" minlength="10" (keypress)="numbersOnly($event)"
+          required></ion-input>
+      </ion-item>
+      <div *ngIf="newUser_phone.errors && (newUser_phone.dirty || newUser_phone.touched)" class="error-container">
+        <p *ngIf="newUser_phone.errors?.required" class="error-text">phone is required</p>
+        <p *ngIf="newUser_phone.invalid" class="error-text">phone must be more than 9 characters</p>
+      </div>
 
-    <ion-item>
-      <ion-label>Country</ion-label>
-      <ion-select [(ngModel)]="newUser.billing.country">
-        <ion-option value="United States of America">United States of America</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-item-divider color="light">Billing Details</ion-item-divider>
 
-    <ion-item>
-      <ion-label>State</ion-label>
-      <ion-select [(ngModel)]="newUser.billing.state">
-        <ion-option value="New York">New York</ion-option>
-        <ion-option value="California">California</ion-option>
-        <ion-option value="Texas">Texas</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label>Address Line 1</ion-label>
+        <ion-input type="text" maxlength="80" #billing_address_1="ngModel" name="billing_address_1" [(ngModel)]="newUser.billing.address_1"
+          required></ion-input>
+      </ion-item>
+      <div *ngIf="billing_address_1.errors && (billing_address_1.dirty || billing_address_1.touched)" class="error-container">
+        <p *ngIf="billing_address_1.errors?.required" class="error-text">billing address is required</p>
+      </div>
 
-    <ion-item>
-      <ion-label>City</ion-label>
-      <ion-input type="text" [(ngModel)]="newUser.billing.city"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Address Line 2</ion-label>
+        <ion-input type="text" maxlength="80" #billing_address_2="ngModel" name="billing_address_2" [(ngModel)]="newUser.billing.address_2"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Postal Code</ion-label>
-      <ion-input type="number" [(ngModel)]="newUser.billing.postcode"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Country</ion-label>
+        <ion-select #billing_country="ngModel" name="billing_country" [(ngModel)]="newUser.billing.country" required>
+          <ion-option value="United Kingdom">United Kingdom</ion-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="billing_country.errors && (billing_country.dirty || billing_country.touched)" class="error-container">
+        <p *ngIf="billing_country.errors?.required" class="error-text">billing country is required</p>
+      </div>
 
-    <ion-item>
-      <ion-label>Phone</ion-label>
-      <ion-input type="number" [(ngModel)]="newUser.billing.phone"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>State</ion-label>
+        <ion-select #billing_state="ngModel" name="billing_state" [(ngModel)]="newUser.billing.state" required>
+          <ion-option *ngFor="let state of states" value="{{state.name}}">{{state.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="billing_state.errors && (billing_state.dirty || billing_state.touched)" class="error-container">
+        <p *ngIf="billing_state.errors?.required" class="error-text">billing state is required</p>
+      </div>
 
-    <ion-item>
-      <ion-label>Same Shipping Details</ion-label>
-      <ion-checkbox (ionChange)="setBillingToShipping()"></ion-checkbox>
-    </ion-item>
+      <ion-item>
+        <ion-label>City</ion-label>
+        <ion-input type="text" #billing_city="ngModel" name="billing_city" [(ngModel)]="newUser.billing.city" required></ion-input>
+      </ion-item>
+      <div *ngIf="billing_city.errors && (billing_city.dirty || billing_city.touched)" class="error-container">
+        <p *ngIf="billing_city.errors?.required" class="error-text">billing city is required</p>
+      </div>
 
-    <ion-item-divider color="danger" *ngIf="!billing_shipping_same">Shipping Details</ion-item-divider>
+      <ion-item>
+        <ion-label>Postal Code</ion-label>
+        <ion-input type="text" #billing_postcode="ngModel" name="billing_postcode" [(ngModel)]="newUser.billing.postcode" required></ion-input>
+      </ion-item>
+      <div *ngIf="billing_postcode.errors && (billing_postcode.dirty || billing_postcode.touched)" class="error-container">
+        <p *ngIf="billing_postcode.errors?.required" class="error-text">billing postcode is required</p>
+      </div>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>Address Line 1</ion-label>
-      <ion-textarea type="text" maxlength="80" [(ngModel)]="newUser.shipping.address_1"></ion-textarea>
-    </ion-item>
+      <ion-item>
+        <ion-label>Phone</ion-label>
+        <ion-input type="text" #billing_phone="ngModel" name="billing_phone" [(ngModel)]="newUser.billing.phone" (keypress)="numbersOnly($event)"
+          minlength="10" required></ion-input>
+      </ion-item>
+      <div *ngIf="billing_phone.errors && (billing_phone.dirty || billing_phone.touched)" class="error-container">
+        <p *ngIf="billing_phone.errors?.required" class="error-text">phone is required</p>
+        <p *ngIf="billing_phone.invalid" class="error-text">phone must be more than 9 characters</p>
+      </div>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>Address Line 2</ion-label>
-      <ion-textarea type="text" maxlength="80" [(ngModel)]="newUser.shipping.address_2"></ion-textarea>
-    </ion-item>
+      <ion-item>
+        <ion-label>Same Shipping Details</ion-label>
+        <ion-checkbox (ionChange)="setBillingToShipping()"></ion-checkbox>
+      </ion-item>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>Country</ion-label>
-      <ion-select [(ngModel)]="newUser.shipping.country">
-        <ion-option value="United States of America">United States of America</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-item-divider color="light" *ngIf="!billing_shipping_same">Shipping Details</ion-item-divider>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>State</ion-label>
-      <ion-select [(ngModel)]="newUser.shipping.state">
-        <ion-option value="New York">New York</ion-option>
-        <ion-option value="California">California</ion-option>
-        <ion-option value="Texas">Texas</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12 no-padding>
+          <ion-item>
+            <ion-label>Address Line 1</ion-label>
+            <ion-input type="text" maxlength="80" #shipping_address_1="ngModel" name="shipping_address_1" [(ngModel)]="newUser.shipping.address_1"
+              required></ion-input>
+          </ion-item>
+        </ion-col>
+        <div *ngIf="shipping_address_1.errors && (shipping_address_1.dirty || shipping_address_1.touched)" class="error-container">
+          <p *ngIf="shipping_address_1.errors?.required" class="error-text">shipping address is required</p>
+        </div>
+      </ion-row>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>City</ion-label>
-      <ion-input type="text" [(ngModel)]="newUser.shipping.city"></ion-input>
-    </ion-item>
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12 no-padding>
+          <ion-item>
+            <ion-label>Address Line 2</ion-label>
+            <ion-input type="text" maxlength="80" #shipping_address_2="ngModel" name="shipping_address_2" [(ngModel)]="newUser.shipping.address_2"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>Postal Code</ion-label>
-      <ion-input type="number" [(ngModel)]="newUser.shipping.postcode"></ion-input>
-    </ion-item>
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12 no-padding>
+          <ion-item>
+            <ion-label>Country</ion-label>
+            <ion-select #shipping_country="ngModel" name="shipping_country" [(ngModel)]="newUser.shipping.country" required>
+              <ion-option value="United Kingdom">United Kingdom</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <div *ngIf="shipping_country.errors && (shipping_country.dirty || shipping_country.touched)" class="error-container">
+          <p *ngIf="shipping_country.errors?.required" class="error-text">shipping country is required</p>
+        </div>
+      </ion-row>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>Phone</ion-label>
-      <ion-input type="number" [(ngModel)]="newUser.shipping.phone"></ion-input>
-    </ion-item>
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12 no-padding>
+          <ion-item>
+            <ion-label>State</ion-label>
+            <ion-select #shipping_state="ngModel" name="shipping_state" [(ngModel)]="newUser.shipping.state" required>
+              <ion-option *ngFor="let state of states" value="{{state.name}}">{{state.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <div *ngIf="shipping_state.errors && (shipping_state.dirty || shipping_state.touched)" class="error-container">
+          <p *ngIf="shipping_state.errors?.required" class="error-text">shipping state is required</p>
+        </div>
+      </ion-row>
+
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12 no-padding>
+          <ion-item>
+            <ion-label>City</ion-label>
+            <ion-input type="text" #shipping_city="ngModel" name="shipping_city" [(ngModel)]="newUser.shipping.city" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <div *ngIf="shipping_city.errors && (shipping_city.dirty || shipping_city.touched)" class="error-container">
+          <p *ngIf="shipping_city.errors?.required" class="error-text">shipping city is required</p>
+        </div>
+      </ion-row>
+
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12 no-padding>
+          <ion-item>
+            <ion-label>Postal Code</ion-label>
+            <ion-input type="text" #shipping_postcode="ngModel" name="shipping_postcode" [(ngModel)]="newUser.shipping.postcode" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <div *ngIf="shipping_postcode.errors && (shipping_postcode.dirty || shipping_postcode.touched)" class="error-container">
+          <p *ngIf="shipping_postcode.errors?.required" class="error-text">shipping postcode is required</p>
+        </div>
+      </ion-row>
+
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12 no-padding>
+          <ion-item>
+            <ion-label>Phone</ion-label>
+            <ion-input type="text" #shipping_phone="ngModel" name="shipping_phone" [(ngModel)]="newUser.shipping.phone" (keypress)="numbersOnly($event)"
+              minlength="10" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <div *ngIf="shipping_phone.errors && (shipping_phone.dirty || shipping_phone.touched)" class="error-container">
+          <p *ngIf="shipping_phone.errors?.required" class="error-text">phone is required</p>
+          <p *ngIf="shipping_phone.invalid" class="error-text">phone must be more than 9 characters</p>
+        </div>
+      </ion-row>
+
+    </form>
+
   </ion-list>
 
 </ion-content>
@@ -141,7 +253,7 @@
       <button ion-button block color="light" (click)="back()">Back</button>
     </ion-col>
     <ion-col>
-      <button ion-button block color="danger" (click)="signup()">Sign Up</button>
+      <button ion-button block color="primary" (click)="signup()" [disabled]="!userForm.form.valid || loading">Sign Up</button>
     </ion-col>
   </ion-row>
 </ion-footer>

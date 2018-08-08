@@ -1,0 +1,74 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{category.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+  <ion-list *ngIf="subCategories.length != 0">
+    <ion-item *ngFor="let category of subCategories" (click)="openProdByCat(category)">
+      <ion-avatar item-start>
+        <img [src]="category['image']?.src" *ngIf="category.image != null">
+        <img src="assets/imgs/shop-icon.png" alt="" *ngIf="category.image === null">
+      </ion-avatar>
+      <h2 [innerHTML]=category.name></h2>
+      <button ion-button icon clear item-end>
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
+
+  <!-- <ion-grid *ngIf="subCategories.length == 0 && products.length >= 1"> -->
+  <ion-grid *ngIf="products" class="product-container">
+    <ion-row align-items-end *ngIf="showToggle">
+      <ion-col col-6 offset-6 class="toggle-container">
+        <button ion-button outline icon-only [ngClass]="{'active': _showList}" (click)="showList()">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <button ion-button outline icon-only [ngClass]="{'active': _showGrid}" (click)="showGrid()">
+          <ion-icon name="apps"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="_showGrid">
+      <ion-col col-6 *ngFor="let product of products" text-wrap (click)="openProductPage(product)">
+        <ion-card>
+          <img [src]="product['images']['0'].src" alt="">
+          <div class="row">
+            <div class="col">
+              <h4 [innerHTML]="product.name"></h4>
+              <p [innerHTML]="product.price_html"></p>
+              <ion-row>
+                <ion-col>
+                  <p *ngIf="product.in_stock === true" class="green" style="font-weight: normal !important;">
+                    In Stock
+                  </p>
+                </ion-col>
+                <ion-col style="padding-right: 5px; text-align: right">
+                  <ion-icon name="md-heart" item-right></ion-icon>
+                </ion-col>
+              </ion-row>
+            </div>
+          </div>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+    <ion-list *ngIf="_showList">
+      <ion-item *ngFor="let product of products" text-wrap (click)="openProductPage(product)" class="item">
+        <ion-thumbnail item-start>
+          <img [src]="product['images']['0'].src" alt="">
+        </ion-thumbnail>
+        <h4 [innerHTML]="product.name"></h4>
+        <p [innerHTML]="product.price_html"></p>
+      </ion-item>
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-grid>
+</ion-content>

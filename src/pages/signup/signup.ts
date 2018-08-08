@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, ToastController, AlertController, ViewController } from 'ionic-angular';
 
 import * as WC from 'woocommerce-api'
 import { LoginPage } from '../login/login';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'page-signup',
@@ -12,9 +14,14 @@ export class SignupPage {
 
   newUser: any = {};
   billing_shipping_same: boolean;
+  loading: boolean = false;
   WooCommerce: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public alertCtrl: AlertController, public viewCtrl: ViewController) {
+  states: any[] = [];
+
+  @ViewChild('userForm') form: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public alertCtrl: AlertController, public viewCtrl: ViewController, public http: Http) {
 
     this.newUser.billing = {};
     this.newUser.shipping = {};
@@ -29,6 +36,10 @@ export class SignupPage {
       wpAPI: true,
       queryStringAuth: true,
     });
+
+    this.http.get('assets/states.json').map(res => res.json()).subscribe(data => {
+      this.states = data;
+    })
   }
 
   ionViewDidLoad() {
@@ -39,123 +50,100 @@ export class SignupPage {
     this.billing_shipping_same = !this.billing_shipping_same;
   }
 
-  checkEmail() {
-
-    let validEmail = false;
-    let reg = /^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$/;
-
-    if (reg.test(this.newUser.email)) {
-
-      // Email looks valid
-      this.WooCommerce.getAsync('customers/email/' + this.newUser.email).then((data) => {
-      // this.WooCommerce.getAsync('customers?email=' + this.newUser.email).then((data) => {
-        let res = (JSON.parse(data.body));
-
-        if (res.error) {
-
-          validEmail = true;
-
-          this.toastCtrl.create({
-            message: "Congratulations, Email is valid.",
-            duration: 3000,
-          }).present();
-        } else {
-
-          validEmail = false;
-          this.toastCtrl.create({
-            message: "Email already registered, please check.",
-            showCloseButton: true
-          }).present();
-        }
-
-        console.log(validEmail);
-      })
-    } else {
-
-      validEmail = false;
-      this.toastCtrl.create({
-        message: "Invalid email, please check.",
-        showCloseButton: true
-      }).present();
-      console.log(validEmail);
-    }
-  }
-
   signup() {
-
-    let customerData = {
-      customer: {}
-    }
-
-    customerData.customer = {
-      "email": this.newUser.email,
-      "first_name": this.newUser.first_name,
-      "last_name": this.newUser.last_name,
-      "username": this.newUser.username,
-      "password": this.newUser.password,
-      "billing": {
-        "first_name": this.newUser.first_name,
-        "last_name": this.newUser.last_name,
-        "company": "",
-        "address_1": this.newUser.billing.address_1,
-        "address_2": this.newUser.billing.address_2,
-        "city": this.newUser.billing.city,
-        "state": this.newUser.billing.state,
-        "postcode": this.newUser.billing.postcode,
-        "country": this.newUser.billing.country,
-        "email": this.newUser.email,
-        "phone": this.newUser.phone,
-      },
-      "shipping": {
-        "first_name": this.newUser.first_name,
-        "last_name": this.newUser.last_name,
-        "company": "",
-        "address_1": this.newUser.shipping.address_1,
-        "address_2": this.newUser.shipping.address_2,
-        "city": this.newUser.shipping.city,
-        "state": this.newUser.shipping.state,
-        "postcode": this.newUser.shipping.postcode,
-        "country": this.newUser.shipping.country
-      }
-    }
 
     if (this.billing_shipping_same) {
       this.newUser.shipping = this.newUser.billing;
     }
 
-    this.WooCommerce.postAsync('customers', customerData.customer).then( (data) => {
-      let res = (JSON.parse(data.body));
+    if (this.form.valid) {
 
-      if (res.role === 'customer') {
-        this.alertCtrl.create({
-          title: 'Account Created',
-          message: 'Your account has been created successfully! Please login to proceed.',
-          buttons: [{
-            text: 'Login',
-            handler: () => {
-              //TODO
-              this.navCtrl.setRoot(LoginPage);
-            }
-          }]
-        }).present();
-      } else if (res.errors) {
-        this.toastCtrl.create({
-          message: res.errors[0].message,
-          showCloseButton: true
-        }).present();
+      let customerData = {
+        customer: {}
       }
-      else {
-        this.toastCtrl.create({
-          message: res.message,
-          showCloseButton: true
-        }).present();
+
+      customerData.customer = {
+        "email": this.newUser.email,
+        "first_name": this.newUser.first_name,
+        "last_name": this.newUser.last_name,
+        "username": this.newUser.username,
+        "password": this.newUser.password,
+        "phone": this.newUser.phone,
+        "billing": {
+          "first_name": this.newUser.first_name,
+          "last_name": this.newUser.last_name,
+          "address_1": this.newUser.billing.address_1,
+          "address_2": this.newUser.billing.address_2,
+          "city": this.newUser.billing.city,
+          "state": this.newUser.billing.state,
+          "postcode": this.newUser.billing.postcode,
+          "country": this.newUser.billing.country,
+          "email": this.newUser.email,
+          "phone": this.newUser.phone,
+        },
+        "shipping": {
+          "first_name": this.newUser.first_name,
+          "last_name": this.newUser.last_name,
+          "address_1": this.newUser.shipping.address_1,
+          "address_2": this.newUser.shipping.address_2,
+          "city": this.newUser.shipping.city,
+          "state": this.newUser.shipping.state,
+          "postcode": this.newUser.shipping.postcode,
+          "country": this.newUser.shipping.country
+        }
       }
-    })
-  };
+
+      // console.log(customerData.customer);
+
+      this.loading = true;
+
+      this.WooCommerce.postAsync('customers', customerData.customer).then( (data) => {
+        let res = (JSON.parse(data.body));
+
+        if (res.role === 'customer') {
+          this.alertCtrl.create({
+            title: 'Account Created',
+            message: 'Your account has been created successfully! Please login to proceed.',
+            buttons: [{
+              text: 'Login',
+              handler: () => {
+                //TODO
+                this.navCtrl.setRoot(LoginPage);
+              }
+            }]
+          }).present();
+          this.loading = false;
+        } else if (res.errors) {
+          this.toastCtrl.create({
+            message: res.errors[0].message,
+            showCloseButton: true
+          }).present();
+          this.loading = false;
+        }
+        else {
+          this.toastCtrl.create({
+            message: res.message,
+            showCloseButton: true
+          }).present();
+          this.loading = false;
+        }
+      })
+    };
+  }
+
 
   back() {
 
     this.viewCtrl.dismiss();
+  }
+
+  numbersOnly(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
   }
 
 }

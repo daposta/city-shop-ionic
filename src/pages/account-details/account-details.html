@@ -1,0 +1,63 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Account Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content *ngIf="user">
+  <ion-item-group>
+    <br>
+    <ion-item-divider color="light">User Details</ion-item-divider>
+    <ion-item>
+      <p>{{user.first_name}} {{user.last_name}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{user.username}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{user.email}}</p>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="light">Billing Address</ion-item-divider>
+    <ion-item>
+      <p>{{user['billing'].first_name}} {{user['billing'].last_name}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{user['billing'].email}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{user['billing'].phone}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{user['billing'].address_1}}, {{user['billing'].city}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{user['billing'].state}}, {{user['billing'].country}}</p>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="light">Shipping Address</ion-item-divider>
+    <ion-item>
+      <p>{{user['shipping'].first_name}} {{user['shipping'].last_name}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{user['shipping'].email}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{user['shipping'].phone}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{user['shipping'].address_1}}, {{user['shipping'].city}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{user['shipping'].state}}, {{user['shipping'].country}}</p>
+    </ion-item>
+  </ion-item-group>
+
+</ion-content>

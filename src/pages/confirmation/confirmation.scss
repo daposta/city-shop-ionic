@@ -1,3 +1,36 @@
 page-confirmation {
+    
+    .truck-container, .text-container {
+        box-shadow: none;
+        text-align: center;
+    }
 
+    .text-container {
+
+        h1 {
+            font-weight: bold;
+            font-size: 19px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #7D7D80;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        p.orderNo {
+            color: #000;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    }
+
+    .footer::before {
+        background-image: none;
+    }
+
+    button.continue {
+        margin-bottom: 0;
+    }
 }

@@ -9,141 +9,290 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-divider color="light">Personal Details</ion-item-divider>
+    <form #checkoutForm="ngForm">
 
-    <ion-item>
-      <ion-label>First Name</ion-label>
-      <ion-input type="text" [(ngModel)]="newOrder.first_name"></ion-input>
-    </ion-item>
+      <ion-item-divider color="light">Personal Details</ion-item-divider>
 
-    <ion-item>
-      <ion-label>Last Name</ion-label>
-      <ion-input type="text" [(ngModel)]="newOrder.last_name"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>First Name</ion-label>
+        <ion-input type="text" #newOrder_first_name="ngModel" name="newOrder_first_name" [(ngModel)]="newOrder.first_name" required></ion-input>
+      </ion-item>
+      <ion-item class="form-error-container" no-lines *ngIf="newOrder_first_name.invalid && newOrder_first_name.touched">
+        <span class="form-error">
+          first name cannot be empty
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Email</ion-label>
-      <ion-input type="text" [(ngModel)]="newOrder.email"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Last Name</ion-label>
+        <ion-input type="text" #newOrder_last_name="ngModel" name="newOrder_last_name" [(ngModel)]="newOrder.last_name" required></ion-input>
+      </ion-item>
+      <ion-item class="form-error-container" no-lines *ngIf="newOrder_last_name.invalid && newOrder_last_name.touched">
+        <span class="form-error">
+          last name cannot be empty
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Username</ion-label>
-      <ion-input type="text" [(ngModel)]="newOrder.username"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Email</ion-label>
+        <ion-input type="text" #newOrder_email="ngModel" name="newOrder_email" [(ngModel)]="newOrder.email" required></ion-input>
+      </ion-item>
+      <ion-item class="form-error-container" no-lines *ngIf="newOrder_email.invalid && newOrder_email.touched">
+        <span class="form-error">
+          email cannot be empty
+        </span>
+      </ion-item>
 
-    <ion-item-divider color="light">Billing Details</ion-item-divider>
+      <ion-item>
+        <ion-label>Username</ion-label>
+        <ion-input type="text" #newOrder_username="ngModel" name="newOrder_username" [(ngModel)]="newOrder.username" required></ion-input>
+      </ion-item>
+      <ion-item class="form-error-container" no-lines *ngIf="newOrder_username.invalid && newOrder_username.touched">
+        <span class="form-error">
+          username cannot be empty
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Address Line 1</ion-label>
-      <ion-textarea type="text" maxlength="80" [(ngModel)]="newOrder.billing.address_1"></ion-textarea>
-    </ion-item>
+      <ion-item-divider color="light">Billing Details</ion-item-divider>
 
-    <ion-item>
-      <ion-label>Address Line 2</ion-label>
-      <ion-textarea type="text" maxlength="80" [(ngModel)]="newOrder.billing.address_2"></ion-textarea>
-    </ion-item>
+      <ion-item>
+        <ion-label>Address Line 1</ion-label>
+        <ion-textarea type="text" maxlength="80" #newOrder_billing_address_1="ngModel" name="newOrder_billing_address_1" [(ngModel)]="newOrder.billing.address_1"
+          required></ion-textarea>
+      </ion-item>
+      <ion-item class="form-error-container" no-lines *ngIf="newOrder_billing_address_1.invalid && newOrder_billing_address_1.touched">
+        <span class="form-error">
+          billing address cannot be empty
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Country</ion-label>
-      <ion-select [(ngModel)]="newOrder.billing.country">
-        <ion-option value="United Kingdom">United Kingdom</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label>Address Line 2</ion-label>
+        <ion-textarea type="text" maxlength="80" #newOrder_billing_address_2="ngModel" name="newOrder_billing_address_2" [(ngModel)]="newOrder.billing.address_2"></ion-textarea>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>State</ion-label>
-      <ion-select [(ngModel)]="newOrder.billing.state">
-        <ion-option value="Liverpool">Liverpool</ion-option>
-        <ion-option value="North London">North London</ion-option>
-        <ion-option value="Accrington">Accrington</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label>Country</ion-label>
+        <ion-select #newOrder_billing_country="ngModel" name="newOrder_billing_country" [(ngModel)]="newOrder.billing.country" required>
+          <ion-option value="United Kingdom">United Kingdom</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="form-error-container" no-lines *ngIf="newOrder_billing_country.invalid && newOrder_billing_country.touched">
+        <span class="form-error">
+          billing country cannot be empty
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>City</ion-label>
-      <ion-input type="text" [(ngModel)]="newOrder.billing.city"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>State</ion-label>
+        <ion-select #newOrder_billing_state="ngModel" name="newOrder_billing_state" [(ngModel)]="newOrder.billing.state" required>
+          <ion-option value="Liverpool">Liverpool</ion-option>
+          <ion-option value="North London">North London</ion-option>
+          <ion-option value="Accrington">Accrington</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="form-error-container" no-lines *ngIf="newOrder_billing_state.invalid && newOrder_billing_state.touched">
+        <span class="form-error">
+          billing state cannot be empty
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Postal Code</ion-label>
-      <ion-input type="number" [(ngModel)]="newOrder.billing.postcode"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>City</ion-label>
+        <ion-input type="text" #newOrder_billing_city="ngModel" name="newOrder_billing_city" [(ngModel)]="newOrder.billing.city"
+          required></ion-input>
+      </ion-item>
+      <ion-item class="form-error-container" no-lines *ngIf="newOrder_billing_city.invalid && newOrder_billing_city.touched">
+        <span class="form-error">
+          billing city cannot be empty
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Phone</ion-label>
-      <ion-input type="number" [(ngModel)]="newOrder.billing.phone"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Postal Code</ion-label>
+        <ion-input type="number" #newOrder_billing_postcode="ngModel" name="newOrder_billing_postcode" [(ngModel)]="newOrder.billing.postcode"
+          required></ion-input>
+      </ion-item>
+      <ion-item class="form-error-container" no-lines *ngIf="newOrder_billing_postcode.invalid && newOrder_billing_postcode.touched">
+        <span class="form-error">
+          billing postcode cannot be empty
+        </span>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Same Shipping Details</ion-label>
-      <ion-checkbox (ionChange)="setBillingToShipping()"></ion-checkbox>
-    </ion-item>
+      <ion-item>
+        <ion-label>Phone</ion-label>
+        <ion-input type="number" #newOrder_billing_phone="ngModel" name="newOrder_billing_phone" [(ngModel)]="newOrder.billing.phone"
+          required></ion-input>
+      </ion-item>
+      <ion-item class="form-error-container" no-lines *ngIf="newOrder_billing_phone.invalid && newOrder_billing_phone.touched">
+        <span class="form-error">
+          billing phone number cannot be empty
+        </span>
+      </ion-item>
 
-    <ion-item-divider color="light" *ngIf="!billing_shipping_same">Shipping Details</ion-item-divider>
+      <ion-item>
+        <ion-label>Same Shipping Details</ion-label>
+        <ion-checkbox (ionChange)="setBillingToShipping()"></ion-checkbox>
+      </ion-item>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>First Name</ion-label>
-      <ion-input type="text" [(ngModel)]="newOrder.shipping.first_name"></ion-input>
-    </ion-item>
+      <ion-item-divider color="light" *ngIf="!billing_shipping_same">Shipping Details</ion-item-divider>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>Last Name</ion-label>
-      <ion-input type="text" [(ngModel)]="newOrder.shipping.last_name"></ion-input>
-    </ion-item>
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label>First Name</ion-label>
+            <ion-input type="text" #newOrder_shipping_first_name="ngModel" name="newOrder_shipping_first_name" [(ngModel)]="newOrder.shipping.first_name"
+              required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item class="form-error-container" no-lines *ngIf="newOrder_shipping_first_name.invalid && newOrder_shipping_first_name.touched">
+            shipping first name cannot be empty
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>Address Line 1</ion-label>
-      <ion-textarea type="text" maxlength="80" [(ngModel)]="newOrder.shipping.address_1"></ion-textarea>
-    </ion-item>
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label>Last Name</ion-label>
+            <ion-input type="text" #newOrder_shipping_last_name="ngModel" name="newOrder_shipping_last_name" [(ngModel)]="newOrder.shipping.last_name"
+              required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item class="form-error-container" no-lines *ngIf="newOrder_shipping_last_name.invalid && newOrder_shipping_last_name.touched">
+            shipping last name cannot be empty
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>Address Line 2</ion-label>
-      <ion-textarea type="text" maxlength="80" [(ngModel)]="newOrder.shipping.address_2"></ion-textarea>
-    </ion-item>
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label>Address Line 1</ion-label>
+            <ion-textarea type="text" maxlength="80" #newOrder_shipping_address_1="ngModel" name="newOrder_shipping_address_1" [(ngModel)]="newOrder.shipping.address_1"
+              required></ion-textarea>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item class="form-error-container" no-lines *ngIf="newOrder_billing_address_1.invalid && newOrder_shipping_address_1.touched">
+            shipping address cannot be empty
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>Country</ion-label>
-      <ion-select [(ngModel)]="newOrder.shipping.country">
-        <ion-option value="United Kingdom">United Kingdom</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label>Address Line 2</ion-label>
+            <ion-textarea type="text" maxlength="80" #newOrder_shipping_address_2="ngModel" name="newOrder_shipping_address_2" [(ngModel)]="newOrder.shipping.address_2"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>State</ion-label>
-      <ion-select [(ngModel)]="newOrder.shipping.state">
-        <ion-option value="Liverpool">Liverpool</ion-option>
-        <ion-option value="North London">North London</ion-option>
-        <ion-option value="Accrington">Accrington</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label>Country</ion-label>
+            <ion-select #newOrder_shipping_country="ngModel" name="newOrder_shipping_country" [(ngModel)]="newOrder.shipping.country"
+              required>
+              <ion-option value="United Kingdom">United Kingdom</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item class="form-error-container" no-lines *ngIf="newOrder_shipping_country.invalid && newOrder_shipping_country.touched">
+            shipping country cannot be empty
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>City</ion-label>
-      <ion-input type="text" [(ngModel)]="newOrder.shipping.city"></ion-input>
-    </ion-item>
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label>State</ion-label>
+            <ion-select #newOrder_shipping_state="ngModel" name="newOrder_shipping_state" [(ngModel)]="newOrder.shipping.state" required>
+              <ion-option value="United Kingdom">United Kingdom</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item class="form-error-container" no-lines *ngIf="newOrder_shipping_state.invalid && newOrder_shipping_state.touched">
+            shipping state cannot be empty
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>Postal Code</ion-label>
-      <ion-input type="text" [(ngModel)]="newOrder.shipping.postcode"></ion-input>
-    </ion-item>
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label>City</ion-label>
+            <ion-input type="text" #newOrder_shipping_city="ngModel" name="newOrder_shipping_city" [(ngModel)]="newOrder.shipping.city"
+              required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item class="form-error-container" no-lines *ngIf="newOrder_shipping_city.invalid && newOrder_shipping_city.touched">
+            shipping city cannot be empty
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label>Postal Code</ion-label>
+            <ion-input type="text" #newOrder_shipping_postcode="ngModel" name="newOrder_shipping_postcode" [(ngModel)]="newOrder.shipping.postcode"
+              required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item class="form-error-container" no-lines *ngIf="newOrder_shipping_postcode.invalid && newOrder_shipping_postcode.touched">
+            shipping postcode cannot be empty
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row *ngIf="!billing_shipping_same">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label>Phone</ion-label>
+            <ion-input type="number" #newOrder_shipping_phone="ngModel" name="newOrder_shipping_phone" [(ngModel)]="newOrder.shipping.phone"
+              required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item class="form-error-container" no-lines *ngIf="newOrder_shipping_phone.invalid && newOrder_shipping_phone.touched">
+            shipping phone number cannot be empty
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-item *ngIf="!billing_shipping_same">
-      <ion-label>Phone</ion-label>
-      <ion-input type="number" [(ngModel)]="newOrder.shipping.phone"></ion-input>
-    </ion-item>
 
-    <ion-item-divider color="light">Payment Details</ion-item-divider>
+      <ion-item-divider color="light">Payment Details</ion-item-divider>
 
-    <ion-item>
-      <ion-label>Payment Method</ion-label>
-      <ion-select [(ngModel)]="paymentMethod">
-        <ion-option *ngFor="let p of paymentMethods" value="{{p.method_id}}">{{p.method_title}}</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label>Payment Method</ion-label>
+            <ion-select #newOrder_paymentMethod="ngModel" name="newOrder_paymentMethod" [(ngModel)]="paymentMethod" required>
+              <ion-option *ngFor="let p of paymentMethods" value="{{p.method_id}}">{{p.method_title}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item class="form-error-container" no-lines *ngIf="newOrder_paymentMethod.invalid && newOrder_paymentMethod.touched">
+            payment method cannot be empty
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+    </form>
   </ion-list>
 
 </ion-content>
 
 <ion-footer>
-  <button ion-button full color="primary" (click)="placeOrder()">Place Order</button>
+  <button ion-button full color="primary" (click)="placeOrder()" [disabled]="!checkoutForm.form.valid">Place Order</button>
 </ion-footer>

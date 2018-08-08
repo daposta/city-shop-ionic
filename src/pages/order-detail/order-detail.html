@@ -1,0 +1,90 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Order #{{order.id}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-item-group>
+    <ion-item-divider color="light">Order Details</ion-item-divider>
+
+    <ion-item>
+      <h4>Order Number</h4>
+      <p item-end>{{order.id}}</p>
+    </ion-item>
+
+    <ion-item>
+      <h4>Date</h4>
+      <p item-end>{{order.date_created | date: 'medium'}}</p>
+    </ion-item>
+
+    <ion-item>
+      <h4>Payment Method</h4>
+      <p item-end>{{order.payment_method}}</p>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="light">Product Details</ion-item-divider>
+    <ng-container *ngFor="let item of order['line_items']">
+      <ion-item>
+        <!-- <h4>Product Name</h4> -->
+        <p item-end style="font-weight: bold;">{{item.name}}</p>
+      </ion-item>
+      <ion-item>
+        <h4>Price</h4>
+        <p item-end>&pound;{{item.price}}</p>
+      </ion-item>
+      <ion-item>
+        <h4>Quantity</h4>
+        <p item-end>{{item.quantity}}</p>
+      </ion-item>
+      <ion-item>
+        <h4>SubTotal</h4>
+        <p item-end>&pound;{{item.total}}</p>
+      </ion-item>
+    </ng-container>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="light">Billing Address</ion-item-divider>
+    <ion-item>
+      <p>{{order['billing'].first_name}} {{order['billing'].last_name}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{order['billing'].email}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{order['billing'].phone}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{order['billing'].address_1}}, {{order['billing'].city}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{order['billing'].state}}, {{order['billing'].country}}</p>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="light">Shipping Address</ion-item-divider>
+    <ion-item>
+      <p>{{order['shipping'].first_name}} {{order['shipping'].last_name}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{order['shipping'].email}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{order['shipping'].phone}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{order['shipping'].address_1}}, {{order['shipping'].city}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{order['shipping'].state}}, {{order['shipping'].country}}</p>
+    </ion-item>
+  </ion-item-group>
+
+</ion-content>

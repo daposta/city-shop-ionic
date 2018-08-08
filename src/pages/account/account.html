@@ -9,54 +9,78 @@
 
 <ion-content no-padding>
 
-  <ion-segment [(ngModel)]="myAccount">
-    <ion-segment-button value="account">
+  <ion-segment [(ngModel)]="myAccount" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="accountSegment">
       My Account
     </ion-segment-button>
-    <ion-segment-button value="orders">
+    <ion-segment-button value="ordersSegment">
       My Orders
     </ion-segment-button>
   </ion-segment>
 
   <div [ngSwitch]="myAccount">
-    <ion-list *ngSwitchCase="'account'">
-
+    <ion-list *ngSwitchCase="'accountSegment'">
       <ion-item-divider color="light">ACCOUNT DETAILS</ion-item-divider>
-      <ion-list>
-        <ion-item>
-          <button ion-button icon clear item-left>
-            <ion-icon name="mail-open"></ion-icon>
-          </button>
-          <h6>My Messages</h6>
-          <button ion-button icon clear item-right>
-            <ion-icon name="arrow-forward"></ion-icon>
-          </button>
-        </ion-item>
+      <!-- <ion-item>
+            <button ion-button icon clear item-left>
+              <ion-icon name="mail-open"></ion-icon>
+            </button>
+            <h6>My Messages</h6>
+            <button ion-button icon clear item-right>
+              <ion-icon name="arrow-forward"></ion-icon>
+            </button>
+          </ion-item> -->
 
-        <ion-item>
-          <button ion-button icon clear item-left>
-            <ion-icon name="contact"></ion-icon>
-          </button>
-          <h6>My Account Details</h6>
-          <button ion-button icon clear item-right>
-            <ion-icon name="arrow-forward"></ion-icon>
-          </button>
-        </ion-item>
+      <ion-item (click)="openAccountDetails()">
+        <button ion-button icon clear item-left>
+          <ion-icon name="contact"></ion-icon>
+        </button>
+        <h6>My Account Details</h6>
+        <button ion-button icon clear item-right>
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-item>
 
-        <ion-item>
-          <button ion-button icon clear item-left>
-            <ion-icon name="refresh"></ion-icon>
-          </button>
-          <h6>Transaction History</h6>
-          <button ion-button icon clear item-right>
-            <ion-icon name="arrow-forward"></ion-icon>
-          </button>
-        </ion-item>
-      </ion-list>
+      <!-- <ion-item>
+            <button ion-button icon clear item-left>
+              <ion-icon name="refresh"></ion-icon>
+            </button>
+            <h6>Transaction History</h6>
+            <button ion-button icon clear item-right>
+              <ion-icon name="arrow-forward"></ion-icon>
+            </button>
+          </ion-item> -->
     </ion-list>
 
-    <ion-list *ngSwitchCase="'orders'">
-      myOrdersPage
+    <ion-list *ngSwitchCase="'ordersSegment'">
+      <ion-item *ngFor="let order of myOrders">
+        <ion-row>
+          <ion-col col-12 (click)="openOrderDetail(order)">
+            <ion-card class="orderCard">
+              <h4>
+                Order Number:
+                <span>{{order.id}}</span>
+              </h4>
+              <h4>
+                Order Date:
+                <span>{{order.date_created | date: 'medium'}}</span>
+              </h4>
+              <h4>
+                Status:
+                <span>{{order.status}}</span>
+              </h4>
+              <h4>
+                Quantity:
+                <span>{{order['line_items'].length}}</span>
+              </h4>
+              <h4>
+                Total:
+                <span>{{order.total}}</span>
+              </h4>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-item>
     </ion-list>
   </div>
 

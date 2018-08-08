@@ -1,0 +1,44 @@
+page-sub-categories {
+
+    ion-grid.product-container {
+
+        ion-col {
+            padding: 0 !important;
+
+            ion-card {
+                height: auto;
+
+                h4, p {
+                    font-size: 11px !important;
+                    font-weight: bold !important;
+                    margin-top: 5px !important;
+                    margin-bottom: 5px !important;
+                }
+
+                .green {
+                    color: green;
+                }
+
+                ion-icon {
+                    color: #363563;
+                }
+            }
+        }
+
+        ion-col.toggle-container {
+            padding-right: 7px !important;
+            
+            button {
+                float: right;
+                opacity: .5;
+                // border-color: #999999;
+                // color: #999999;
+            }
+
+            button.active {
+                opacity: 1;
+            }
+        }
+    }
+
+}

@@ -10,43 +10,37 @@
 <ion-content padding>
   <ion-list>
 
-    <ion-item>
-      <ion-label stacked>Card Number</ion-label>
-      <!-- <ion-input type="tel" placeholder="Enter your 16 digit card number" [(ngModel)]="cardNumber"></ion-input> -->
-      <ion-input type="tel" [(ngModel)]="cardNumber" [textMask]="{mask: masks.cardNumber}"></ion-input>
-    </ion-item>
+    <form novalidate [formGroup]="cardPaymentForm">
+      <div class="form-group">
+        <label for="cardNumber">Card Number</label>
+        <input type="tel" placeholder="1234-1234-1234-1234" formControlName="cardNumber" [(ngModel)]="cardNumber" [textMask]="{mask: masks.cardnumber}" required>
+      </div>
 
-    <ion-item>
-      <ion-label stacked>Expiration Month</ion-label>
-      <!-- <ion-input type="tel" placeholder="Enter your card expiration month" [(ngModel)]="cardMonth"></ion-input> -->
-      <ion-input type="tel" [(ngModel)]="cardMonth" [textMask]="{mask: masks.cardMonth}"></ion-input>
-    </ion-item>
+      <div class="form-group">
+        <label stacked>Expiration Month</label>
+        <input type="tel" placeholder="MM" formControlName="cardMonth" [(ngModel)]="cardMonth" [textMask]="{mask: masks.cardmonth}" required>
+      </div>
 
-    <ion-item>
-      <ion-label stacked>Expiration Year</ion-label>
-      <!-- <ion-input type="tel" placeholder="Enter your card expiration year" [(ngModel)]="cardYear"></ion-input> -->
-      <ion-input type="tel" [(ngModel)]="cardYear" [textMask]="{mask: masks.cardYear}"></ion-input>
-    </ion-item>
+      <div class="form-group">
+        <label stacked>Expiration Year</label>
+        <input type="tel" placeholder="YY" formControlName="cardYear" [(ngModel)]="cardYear" [textMask]="{mask: masks.cardyear}" required>
+      </div>
 
-    <ion-item>
-      <ion-label stacked>Expiry Date</ion-label>
-      <!-- <ion-input type="tel" placeholder="Enter your card expiration date" [(ngModel)]="cardExpiry"></ion-input> -->
-      <ion-input type="tel" [(ngModel)]="cardExpiry" [textMask]="{mask: masks.cardExpiry}"></ion-input>
-    </ion-item>
+      <div class="form-group">
+        <label stacked>CVV</label>
+        <input type="tel" placeholder="CVV" formControlName="cardCVV" [(ngModel)]="cardCVV" [textMask]="{mask: masks.cardcvv}" required>
+      </div>
 
-    <ion-item>
-      <ion-label stacked>CVV</ion-label>
-      <!-- <ion-input type="tel" placeholder="Enter your CVV" [(ngModel)]="cardCVV"></ion-input> -->
-      <ion-input type="tel" [(ngModel)]="cardCVV" [textMask]="{mask: masks.cardCVV}"></ion-input>
-    </ion-item>
 
+      <ion-row>
+        <ion-col style="padding-left: 16px; padding-right: 10px;">
+          <button ion-button block large (click)="validateCard()" [ngClass]="{'disabled': !cardPaymentForm.valid}">Add Card</button>
+        </ion-col>
+      </ion-row>
+
+    </form>
   </ion-list>
 
-  <ion-row>
-    <ion-col style="padding-left: 16px; padding-right: 10px;">
-      <button ion-button block large (click)="validateCard()">Add Card</button>
-    </ion-col>
-  </ion-row>
 
 
 

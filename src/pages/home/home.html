@@ -21,10 +21,19 @@
     <!-- <ion-slides autoplay="5000" loop="true" speed="500" pager (ionSlideDidChange)="slideChanged()" #bannerSlides> -->
       <ion-slides autoplay="5000" loop="true" speed="500" pager>
       <ion-slide>
-        <img src="assets/imgs/mens.jpg" />
+        <img src="assets/imgs/belts.jpg" />
       </ion-slide>
       <ion-slide>
-        <img src="assets/imgs/Outfitters.jpg" alt="">
+        <img src="assets/imgs/belt.jpg" alt="">
+      </ion-slide>
+      <ion-slide>
+        <img src="assets/imgs/cool.jpg" alt="">
+      </ion-slide>
+      <ion-slide>
+        <img src="assets/imgs/bag.jpg" alt="">
+      </ion-slide>
+      <ion-slide>
+        <img src="assets/imgs/light.jpg" alt="">
       </ion-slide>
     </ion-slides>
   </ion-card>
@@ -43,7 +52,7 @@
     <ion-grid no-padding>
       <ion-row>
         <ion-col>
-          <img src="assets/imgs/mens.jpg" alt="">
+          <img src="assets/imgs/soft.jpg" alt="">
           <div class="text-container">
             <h2 class="text">Shop Now</h2>
           </div>
@@ -52,11 +61,11 @@
     </ion-grid>
   </ion-card>
 
-  <ion-card>
+  <ion-card (click)="openAccount()">
     <ion-grid no-padding>
       <ion-row>
         <ion-col>
-          <img src="assets/imgs/Outfitters.jpg" alt="">
+          <img src="assets/imgs/softer.jpg" alt="">
           <div class="text-container">
             <h2 class="text">My Account</h2>
           </div>
@@ -65,11 +74,11 @@
     </ion-grid>
   </ion-card>
 
-  <ion-card>
+  <ion-card (click)="opanBrandNew()">
     <ion-grid no-padding>
       <ion-row>
         <ion-col>
-          <img src="assets/imgs/mens.jpg" alt="">
+          <img src="assets/imgs/watch.jpg" alt="">
           <div class="text-container">
             <h2 class="text">Brand New</h2>
           </div>
@@ -77,19 +86,4 @@
       </ion-row>
     </ion-grid>
   </ion-card>
-
-  <!-- <ion-list>
-    <ion-grid no-padding>
-      <ion-row>
-        <ion-slides #productSlides>
-          <ion-slide *ngFor="let product of products" (click)="openProductPage(product)">
-            <ion-card no-padding>
-              <img [src]="product['images'][0]['src']" alt="">
-            </ion-card>
-          </ion-slide>
-        </ion-slides>
-      </ion-row>
-    </ion-grid>
-  </ion-list> -->
-
 </ion-content>

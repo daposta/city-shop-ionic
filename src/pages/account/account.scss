@@ -1,3 +1,17 @@
 page-account {
 
+    ion-card.orderCard {
+        padding: 10px;
+
+        h4 {
+            font-weight: bold;
+            line-height: 1.5em;
+            opacity: .9;
+
+            span {
+                font-weight: initial;
+                opacity: 1;
+            }
+        }
+    }
 }

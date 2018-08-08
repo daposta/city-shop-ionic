@@ -6,15 +6,10 @@
 </div>
 
 <ion-menu [content]="content">
-  <!-- <ion-header>
-    <ion-toolbar color="green">
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
 
   <ion-content>
     <ion-card no-padding style="margin: 0; width: 100%; height: 250px;">
-      <img src="../../assets/imgs/city third.png" alt="">
+      <img src="assets/imgs/city third.png" alt="">
     </ion-card>
 
     <ion-list>
@@ -38,13 +33,28 @@
         </button>
         <h2 class="side-title">Account</h2>
       </ion-item>
-
-      <ion-item menuClose (click)="openHelp()">
+      
+      <ion-item menuClose (click)="openTerms()">
         <button ion-button icon clear item-left>
-          <ion-icon class="side-icon" name="md-help-circle"></ion-icon>
+          <ion-icon class="side-icon" name="document"></ion-icon>
         </button>
-        <h2 class="side-title">Help</h2>
+        <h2 class="side-title">Terms of Use</h2>
       </ion-item>
+
+      <ion-item menuClose (click)="openShipping()">
+        <button ion-button icon clear item-left>
+          <ion-icon class="side-icon" name="swap"></ion-icon>
+        </button>
+        <h2 class="side-title">Shipping and Returns</h2>
+      </ion-item>
+
+      <ion-item (click)="openPage('logout')" menuClose *ngIf="loggedIn">
+        <button ion-button icon clear item-left>
+          <ion-icon class="side-icon" name="log-out"></ion-icon>
+        </button>
+        <h2 class="side-title">Logout</h2>
+      </ion-item>
+
 
       <!-- <ion-item *ngFor="let category of categories" text-wrap menuClose (click)="openCategoryPage(category)">
         <h2 [innerHTML]=category.name></h2>

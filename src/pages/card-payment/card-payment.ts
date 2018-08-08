@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { Stripe } from '@ionic-native/stripe';
 import * as WC from 'woocommerce-api';
 import { HomePage } from '../home/home';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /**
  * Generated class for the CardPaymentPage page.
@@ -23,7 +24,6 @@ export class CardPaymentPage {
   WooCommerce: any;
 
   cardNumber: any;
-  cardExpiry: any;
   cardMonth: any;
   cardYear: any;
   cardCVV: any;
@@ -32,7 +32,9 @@ export class CardPaymentPage {
   order: any;
   card_token: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public stripe: Stripe, public alertCtrl: AlertController) {
+  cardPaymentForm: FormGroup;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public stripe: Stripe, public alertCtrl: AlertController, public fb: FormBuilder) {
 
     this.WooCommerce = WC({
 
@@ -44,14 +46,14 @@ export class CardPaymentPage {
       queryStringAuth: true,
     });
 
-    this.storage.get('orderData').then( (orderData) => {
+    this.storage.get('orderData').then((orderData) => {
       this.orderData = orderData;
-      console.log(this.orderData);
+      // console.log(this.orderData);
     })
 
     this.storage.get('order').then((order) => {
       this.order = order;
-      console.log(this.order);
+      // console.log(this.order);
     })
 
     this.storage.get('token').then((token) => {
@@ -59,13 +61,18 @@ export class CardPaymentPage {
     })
 
     this.masks = {
-      // phoneNumber: ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
-      cardNumber: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
-      cardExpiry: [/[0-1]/, /\d/, '/', /[1-2]/, /\d/],
-      cardMonth: [/\d/, /\d/],
-      cardYear: [/\d/, /\d/],
-      cardCVV: [/\d/, /\d/, /\d/]
-  };
+      cardnumber: [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+      cardmonth: [/\d/, /\d/],
+      cardyear: [/\d/, /\d/],
+      cardcvv: [/\d/, /\d/, /\d/]
+    };
+
+    this.cardPaymentForm = this.fb.group({
+      cardNumber: ['', Validators.required],
+      cardMonth: ['', Validators.required],
+      cardYear: ['', Validators.required],
+      cardCVV: ['', Validators.required]
+    });
 
   }
 
@@ -77,52 +84,63 @@ export class CardPaymentPage {
 
 
   validateCard() {
-    let card = {
-      number: this.cardNumber,
-      expMonth: this.cardMonth,
-      expYear: this.cardYear,
-      cvc: this.cardCVV
-    };
 
-    this.stripe.createCardToken(card)
-      .then(token => {
+    if (this.cardPaymentForm.valid) {
 
-        console.log(token);
-        this.storage.set('token', token);
+      let card = {
+        // number: this.cardNumber,
+        // expMonth: this.cardMonth,
+        // expYear: this.cardYear,
+        // cvc: this.cardCVV
+        number: this.cardNumber.replace(/\D+/g, ''),
+        expMonth: this.cardMonth.replace(/\D+/g, ''),
+        expYear: this.cardYear.replace(/\D+/g, ''),
+        cvc: this.cardCVV.replace(/\D+/g, '')
+      };
 
-        var data = {
-          status: 'processing',
-          payment_method: this.orderData['payment_details'].method_id,
-          payment_method_title: this.orderData['payment_details'].method_title,
-          transaction_id: token.id,
-        }
+      // console.log(card);
 
-        let id = this.order.id;
-        console.log(id);
+      this.stripe.createCardToken(card)
+        .then(token => {
 
-        this.WooCommerce.putAsync('orders/' + id, data).then( (res) => {
+          // console.log(token);
+          this.storage.set('token', token);
 
-          console.log(res.body.json());
-          
-          this.alertCtrl.create({
-            title: 'Processing',
-            message: 'Your order is being processed',
-            buttons: [{
-              text: 'OK',
-              handler: () => {
-                this.navCtrl.setRoot(HomePage)
-              }
-            }]
-          }).present();
-        }).catch( (err) => {
+          var data = {
+            status: 'processing',
+            payment_method: this.orderData['payment_details'].method_id,
+            payment_method_title: this.orderData['payment_details'].method_title,
+            transaction_id: token.id,
+          }
 
-          console.log(err);
+          let id = this.order.id;
+          // console.log(id);
+
+          this.WooCommerce.putAsync('orders/' + id, data).then((res) => {
+
+            // console.log(res.body);
+
+            this.alertCtrl.create({
+              title: 'Processing',
+              message: 'Your order is being processed',
+              buttons: [{
+                text: 'OK',
+                handler: () => {
+                  this.navCtrl.setRoot(HomePage)
+                }
+              }]
+            }).present();
+          }).catch((err) => {
+
+            console.log(err);
+          })
+
+        }).catch(error => {
+
+          console.log(error);
         })
 
-      }).catch(error => {
-
-        console.log(error);
-      })
+    }
 
   }
 

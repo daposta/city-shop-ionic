@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 
 import * as WC from 'woocommerce-api';
-import { ProductsByCategoryPage } from '../products-by-category/products-by-category';
+import { SubCategoriesPage } from '../sub-categories/sub-categories';
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'page-categories',
@@ -13,8 +14,21 @@ export class CategoriesPage {
 
   WooCommerce: any;
   categories: any[] = [];
+  loader: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public platform: Platform, public http: Http) {
+
+    platform.registerBackButtonAction(() => {
+    }, 1);
+
+    this.loader = this.loadingCtrl.create({
+      cssClass: 'transparent',
+    });
+
+    let backAction = platform.registerBackButtonAction(() => {
+      this.navCtrl.pop();
+      backAction();
+    }, 2)
 
     this.WooCommerce = WC({
 
@@ -25,30 +39,39 @@ export class CategoriesPage {
       wpAPI: true,
       queryStringAuth: true,
     });
-
-    let loader = this.loadingCtrl.create({
-      cssClass: 'transparent',
-    });
-
-    loader.present();
-    this.WooCommerce.getAsync('products/categories?per_page=20').then((data) => {
-
-      this.categories = JSON.parse(data.body);
-      console.log(this.categories);
-      loader.dismiss();
-    }, error => {
-
-      console.log(error);
-    })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CategoriesPage');
+
+    this.loader.present();
+    this.WooCommerce.getAsync('products/categories?per_page=100').then((data) => {
+
+      let temp: any[] = JSON.parse(data.body);
+      for (let i = 0; i < temp.length; i++) {
+
+        if (temp[i].parent == 0) {
+
+          this.categories.push(temp[i]);
+        };
+      }
+
+      // console.log(this.categories);
+      this.loader.dismiss();
+    }, error => {
+
+      console.log(error);
+      this.loader.dismiss();
+    });
   }
 
-  openProdByCat(category) {
+  ionViewDidLeave() {
+    this.loader.dismiss();
+  }
 
-    this.navCtrl.push(ProductsByCategoryPage, {'category': category})
+  openSubCat(category) {
+
+    this.navCtrl.push(SubCategoriesPage, { 'category': category });
   }
 
 }

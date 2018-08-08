@@ -22,18 +22,23 @@ export class CartPage {
 
     this.storage.ready().then(() => {
 
-      this.storage.get('cart').then( (data) => {
+      this.storage.get('cart').then( (cart) => {
 
-        this.cartItems = data;
-        console.log(this.cartItems);
-
-        if (this.cartItems.length > 0) {
+        if (cart) {
           
-          this.cartItems.forEach( (item, index) => {
-            this.total = this.total + (item.product.price * item.qty)
-          })
+          this.cartItems = cart;
+          // console.log(this.cartItems);
+  
+          if (this.cartItems.length > 0) {
+            
+            this.cartItems.forEach( (item, index) => {
+              this.total = this.total + (item.product.price * item.qty)
+            })
+          } else {
+  
+            this.showEmptyCartMessage = true;
+          }
         } else {
-
           this.showEmptyCartMessage = true;
         }
       })
@@ -68,7 +73,7 @@ export class CartPage {
   }
 
   checkout() {
-    console.log('checking out');
+    // console.log('checking out');
 
     this.storage.get("user").then( (data) => {
 
